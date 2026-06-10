@@ -24,5 +24,7 @@ Pensez à conserver vos requêtes SQL dans un fichier à part !!!
 - Modifier la table "student"
 - Ajouter lui une colonne "height", un entier sur 3, nullable
 	
+### 1.4
 
-
+- Modifier la table "student"
+- Ajouter une colonne "gender", un ENUM qui prend les valeurs H, M ou A, placez la colonne après "name"
