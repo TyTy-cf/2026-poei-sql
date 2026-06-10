@@ -1,0 +1,3 @@
+ALTER TABLE student
+    ADD COLUMN height INT(3) DEFAULT NULL
+
