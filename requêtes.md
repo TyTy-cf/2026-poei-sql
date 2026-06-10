@@ -14,3 +14,7 @@ CREATE TABLE student (
 1.3
 
 ALTER TABLE student ADD COLUMN height INT(3) DEFAULT NULL AFTER birthedAt;
+
+1.4
+
+ALTER TABLE student ADD COLUMN gender ENUM ('H', 'F', 'NB') DEFAULT NULL AFTER name;
