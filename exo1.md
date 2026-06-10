@@ -1,3 +1,9 @@
+### 1.1
+
+create database tp
+    default character set utf8;
+
+
 ### 1.2
 
 create table student(
