@@ -27,4 +27,16 @@ Pensez à conserver vos requêtes SQL dans un fichier à part !!!
 ### 1.4
 
 - Modifier la table "student"
-- Ajouter une colonne "gender", un ENUM qui prend les valeurs H, M ou A, placez la colonne après "name"
+- Ajouter une colonne "gender", un ENUM qui prend les valeurs H, F ou A, placez la colonne après "name"
+
+### 1.5
+
+- Modifier la table "student"
+- Supprimer la colonne "name"
+
+### 1.6
+
+- Créer une table "course"
+- Elle représente une table des matières à enseigner
+- Créez la table avec les colonnes et leur type, que vous jugerez adéquat
+(Aide : j'en vois au moins 4)
