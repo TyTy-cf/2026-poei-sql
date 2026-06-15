@@ -99,7 +99,7 @@ VALUES ('Parker', 'Antony', 199, 'M');
 ### 11/ Afficher tous les étudiants et afficher leur taille au format « 1.26m » au lieu de 126
 
 ```sql
-SELECT *, CONCAT(height / 100, 'm') AS taille
+SELECT *, CONCAT(FORMAT(height / 100, 2), 'm') AS taille
 FROM students;
 ```
 
