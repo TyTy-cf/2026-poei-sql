@@ -28,12 +28,18 @@ SELECT * FROM pokemon WHERE slug = name_api;
 #9
 SELECT * FROM pokemon WHERE name LIKE "%Mew%";
 
-#10
+#11
 SELECT * FROM pokemon WHERE LENGTH(name) <= 3;
 
-#9
-
-#11
 #12
+SELECT SUM(HP + ATK + DEF + SPA + SPD + SPE) AS total_stats, name FROM pokemon GROUP BY name ORDER BY total_stats DESC LIMIT 1;
+
 #13
+SELECT * FROM pokemon ORDER BY base_experience ASC LIMIT 1;
+
 #14
+SELECT 
+    CONCAT(ROUND(base_experience / (HP + ATK + DEF + SPA + SPD + SPE) * 100, 2), '%') AS rapport,
+    name 
+FROM pokemon
+ORDER BY rapport;
