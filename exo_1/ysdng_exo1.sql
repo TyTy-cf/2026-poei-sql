@@ -72,7 +72,7 @@ VALUES ('Parker', 'Anthony', 199, 'M');
 
 ---11) ---------
 SELECT *,
-       CONCAT(FORMAT(height/100,2),'m')
+       CONCAT(FORMAT(height / 100, 2), 'm')
 FROM students;
 -- 12) -----------
 UPDATE students
@@ -84,7 +84,17 @@ DELETE
 FROM students
 WHERE first_name = 'maxine';
 
---
+-- 14) ------------------
+SELECT *, IF(sex = 'M', 'Homme', 'Femme') as sex_full
+FROM students;
+
+-- 15)---------
+SELECT sex, COUNT(*) AS total_students
+FROM students
+WHERE (height < 160 AND sex = 'M')
+   OR (height > 160 AND sex = 'F')
+GROUP BY sex;
+
 
 
 
