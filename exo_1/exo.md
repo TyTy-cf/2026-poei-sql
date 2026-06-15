@@ -30,7 +30,7 @@ FROM `students`
 ### 4
 
 ```sql
-SELECT MAX(height)
+SELECT AVG(height)
 FROM `students`
 WHERE sex = 'M'
 ```
