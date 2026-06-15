@@ -72,7 +72,7 @@ FROM students;
 
 #15
 
--- cumulez 2 et 5 pour afficher le nombre d'étudiants par sexe qui sont soit des hommes de moins de 160cm soit des femmes de plus de 160cm
+-- cumuluez 2 et 5
 
 SELECT sex, COUNT(*) AS nbr_etudiants
 FROM students
