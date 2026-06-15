@@ -39,14 +39,28 @@ WHERE sex = 'M'
 ### 5
 
 ```sql
+SELECT COUNT(*) AS "Nombre d'étudiantes femme"
+FROM `students`
+WHERE sex = 'F';
 
+SELECT COUNT(*) AS "Nombre d'étudiants homme"
+FROM `students`
+WHERE sex = 'M';
 ```
 
 
 ### 6
 
 ```sql
+SELECT COUNT(*) AS "Nombre d'étudiantes femme"
+FROM `students`
+WHERE sex = 'F'
+AND height < 160;
 
+SELECT COUNT(*) AS "Nombre d'étudiants homme"
+FROM `students`
+WHERE sex = 'M'
+AND height > 160;
 ```
 
 
