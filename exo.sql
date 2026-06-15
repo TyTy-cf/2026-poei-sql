@@ -35,3 +35,20 @@ SELECT COUNT(*) FROM `students` WHERE height >= 170 AND height <= 190;
 --- 10
 
 INSERT INTO `students` VALUES (NULL, "Parker", "Anthony", 190, "M");
+
+--- 11
+
+--- 12
+
+UPDATE `students` SET height = 189 WHERE last_name = "PARKER";
+
+--- 13
+
+DELETE FROM `students` WHERE first_name = "Maxine";
+
+--- 14
+
+SELECT *, IF(sex = "M", 'Homme', 'Femme') FROM `students`;
+
+
+
