@@ -74,12 +74,19 @@ AND height > 160;
 ### 8
 
 ```sql
-
+SELECT *
+FROM students
+WHERE height >= 170 
+AND height <= 190
 ```
 
 
 ### 9
 
 ```sql
-
+SELECT *
+FROM students
+WHERE height >= 160 
+AND height <= 190 
+AND height%10 = 0
 ```
