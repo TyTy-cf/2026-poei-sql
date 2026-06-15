@@ -42,3 +42,24 @@ VALUES (NULL, "Parker", "Antony", 199, "M");
 
 
 SELECT CONCAT (FLOOR(height/100), ".", height%100, "m") FROM students;
+
+
+UPDATE students
+SET height = 189
+WHERE last_name = "Parker";
+
+
+DELETE FROM students
+WHERE first_name = "Maxine";
+
+
+SELECT *,
+       IF(
+               sex = "M",
+               "Homme",
+               "Femme"
+       )
+FROM students;
+
+
+Je comprends pas ce qui est attendu à la 15
