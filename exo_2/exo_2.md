@@ -68,40 +68,55 @@ FROM `pokemon`
 ### 8
 
 ```sql
-
+SELECT *
+FROM `pokemon`
+WHERE `slug` = `name_api`
 ```
 
 
 ### 9
 
 ```sql
-
+SELECT *
+FROM `pokemon`
+WHERE name LIKE "%Mew%"
 ```
 
 
 ### 11
 
 ```sql
-
+SELECT *
+FROM `pokemon`
+WHERE length(name) <= 3
 ```
 
 
 ### 12
 
 ```sql
-
+SELECT name,
+       (hp+atk+def+spa+spd+spe) AS total_stats
+FROM `pokemon`
+GROUP BY total_stats DESC
+LIMIT 1
 ```
 
 
 ### 13
 
 ```sql
-
+SELECT *
+FROM `pokemon`
+GROUP BY base_experience
+LIMIT 1
 ```
 
 
 ### 14
 
 ```sql
-
+SELECT `id`, `weight`, `height`, `base_experience`, `hp`, `atk`, `def`, `spa`, `spd`, `spe`, `name`, `slug`, `id_api`, `name_api`, `is_default`,
+CONCAT(ROUND((base_experience/(hp+atk+def+spa+spd+spe))*100,2),"%") AS efficace
+FROM `pokemon`
 ```
