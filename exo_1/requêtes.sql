@@ -32,4 +32,25 @@ SELECT COUNT(*) AS amount FROM students WHERE height <= 190 AND height >= 170; -
 
 -- 1-9
 
-SELECT COUNT(*) AS amount FROM students WHERE height = 160 OR height = 170 OR height = 180 OR height = 190; -- 2
+SELECT COUNT(*) AS amount FROM students WHERE height = 160 OR height = 170 OR height = 180 OR height = 190;
+-- 2
+
+-- 1-10
+INSERT INTO students VALUES (NULL, "Parker", "Antony", 199, 'M');
+
+-- 1-11
+
+SELECT id, last_name, first_name, CONCAT(ROUND(height/100, 2), "m"), sex FROM students;
+
+-- 1-12
+
+UPDATE students SET height = 189 WHERE last_name = "Parker";
+SELECT * FROM students WHERE last_name = "Parker";
+
+-- 1-13
+
+DELETE FROM students WHERE first_name = "Maxine";
+
+-- 1-14
+
+SELECT id, last_name, first_name, height, IF(sex = "M", "Homme", "Femme") FROM students;
