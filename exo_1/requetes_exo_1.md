@@ -35,6 +35,7 @@ WHERE sex = 'M';
 SELECT 'M' AS sexe, COUNT(*) AS total
 FROM students
 WHERE sex = 'M';
+
 SELECT 'F' AS sexe, COUNT(*) AS total
 FROM students
 WHERE sex = 'F';
@@ -57,19 +58,30 @@ WHERE sex = 'F'
 ### 7/ Afficher le nombre d'étudiants par taille, et uniquement celles ayant plus d'un étudiant
 
 ```sql
-
+SELECT height, COUNT(*) AS total
+FROM students
+GROUP BY height
+HAVING total > 1;
 ```
 
 ### 8/ Afficher les étudiants ayant une taille comprise entre 170 et 190cm
 
 ```sql
-
+SELECT *
+FROM students
+WHERE height >= 170
+  AND height <= 190;
 ```
 
 ### 9/ Afficher les étudiants faisant exactement 160, 170, 180 et 190cm
 
 ```sql
-
+SELECT *
+FROM students
+WHERE height = 160
+   OR height = 170
+   OR height = 180
+   OR height = 190;
 ```
 
 ### 10/ Créer un étudiant avec les informations suivantes :
@@ -80,35 +92,51 @@ WHERE sex = 'F'
 - Sex : M
 
 ```sql
-
+INSERT INTO students (last_name, first_name, height, sex)
+VALUES ('Parker', 'Antony', 199, 'M');
 ```
 
 ### 11/ Afficher tous les étudiants et afficher leur taille au format « 1.26m » au lieu de 126
 
 ```sql
-
+SELECT *, CONCAT(height / 100, 'm') AS taille
+FROM students;
 ```
 
 ### 12/ Modifier les étudiants dont le « last_name » vaut « Parker » afin qu’ils aient une taille de 189
 
 ```sql
-
+UPDATE students
+SET height = 189
+WHERE last_name = 'Parker';
 ```
 
 ### 13/ Supprimer les étudiants dont le « first_name » vaut « Maxine »
 
 ```sql
-
+DELETE
+FROM students
+WHERE first_name = 'Maxine';
 ```
 
 ### 14/ Afficher les étudiants, mais en précisant que « F » est « Femme » et « M » est « Homme »
 
 ```sql
-
+SELECT last_name,
+       first_name,
+       IF(sex = 'M', 'Homme', 'Femme') AS sexe
+FROM students;
 ```
 
 ### 15/ Cumulez l’affichage des étudiants avec la question 2 et la question 5
 
 ```sql
-
+SELECT *,
+       (SELECT COUNT(*) FROM students
+        WHERE sex = 'M' AND height < 160) AS total_hommes_moins_160,
+       (SELECT COUNT(*) FROM students
+        WHERE sex = 'F' AND height > 160) AS total_femmes_plus_160
+FROM students
+WHERE (sex = 'M' AND height < 160)
+   OR (sex = 'F' AND height > 160);
 ```
