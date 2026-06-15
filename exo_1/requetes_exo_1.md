@@ -17,14 +17,14 @@ WHERE (sex = 'M' AND height < 160)
 ### 3/ Afficher la taille minimum parmi tous les étudiants
 
 ```sql
-SELECT MIN(height)
+SELECT MIN(height) AS "Taille mini"
 FROM students;
 ```
 
 ### 4/ Afficher la moyenne de la taille pour les hommes (M)
 
 ```sql
-SELECT AVG(height)
+SELECT AVG(height) AS "Taille moyenne"
 FROM students
 WHERE sex = 'M';
 ```
@@ -41,6 +41,15 @@ FROM students
 WHERE sex = 'F';
 ```
 
+Avec GROUP BY:
+
+```sql
+SELECT sex, COUNT(*) AS total
+FROM students
+GROUP BY sex;
+
+```
+
 ### 6/ Même question que la 5, mais pour les étudiants M de moins de 160cm ou les F de plus de 160
 
 ```sql
@@ -53,6 +62,19 @@ SELECT 'F' AS sexe, COUNT(*) AS total
 FROM students
 WHERE sex = 'F'
   AND height > 160;
+```
+
+Avec GROUP BY:
+
+```sql
+SELECT sex, COUNT(*) AS total
+FROM students
+WHERE sex = 'M'
+    AND height < 160
+   OR sex = 'F'
+    AND height > 160
+GROUP BY sex;
+
 ```
 
 ### 7/ Afficher le nombre d'étudiants par taille, et uniquement celles ayant plus d'un étudiant
@@ -84,6 +106,16 @@ WHERE height = 160
    OR height = 190;
 ```
 
+OU
+
+```sql
+SELECT *
+FROM students
+WHERE height >= 160
+  AND height <= 190
+  AND HEIGHT%10 = 0;
+```
+
 ### 10/ Créer un étudiant avec les informations suivantes :
 
 - Last_name : Parker
@@ -103,6 +135,22 @@ SELECT *, CONCAT(FORMAT(height / 100, 2), 'm') AS taille
 FROM students;
 ```
 
+ou
+
+```sql
+SELECT id,
+       last_name,
+       first_name,
+       CONCAT(FORMAT(height / 100, 2), 'm') AS hieght,
+       sex
+FROM students;
+```
+ou
+
+```sql
+SELECT CONCAT(FLOOR(height / 100), ".", height%100, "m")
+FROM students;
+```
 ### 12/ Modifier les étudiants dont le « last_name » vaut « Parker » afin qu’ils aient une taille de 189
 
 ```sql
@@ -127,15 +175,28 @@ SELECT last_name,
        IF(sex = 'M', 'Homme', 'Femme') AS sexe
 FROM students;
 ```
+ou
+```sql
+SELECT id,
+       last_name,
+       first_name,
+       CONCAT(FORMAT(height / 100, 2), 'm') AS hieght,
+       IF(sex = 'M', 'Homme', 'Femme')      AS sex
+FROM students;
+```
 
 ### 15/ Cumulez l’affichage des étudiants avec la question 2 et la question 5
 
 ```sql
 SELECT *,
-       (SELECT COUNT(*) FROM students
-        WHERE sex = 'M' AND height < 160) AS total_hommes_moins_160,
-       (SELECT COUNT(*) FROM students
-        WHERE sex = 'F' AND height > 160) AS total_femmes_plus_160
+       (SELECT COUNT(*)
+        FROM students
+        WHERE sex = 'M'
+          AND height < 160) AS total_hommes_moins_160,
+       (SELECT COUNT(*)
+        FROM students
+        WHERE sex = 'F'
+          AND height > 160) AS total_femmes_plus_160
 FROM students
 WHERE (sex = 'M' AND height < 160)
    OR (sex = 'F' AND height > 160);
