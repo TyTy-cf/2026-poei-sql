@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `pokemon` (
   `is_default` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `slug_idx` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=1118;
+) ENGINE=InnoDB AUTO_INCREMENT=1118;x
 
 --
 -- Déchargement des données de la table `pokemon`
