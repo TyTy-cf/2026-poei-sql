@@ -67,7 +67,10 @@ AND height > 160;
 ### 7
 
 ```sql
-
+SELECT height, COUNT(*) AS total
+FROM students
+GROUP BY height
+having total > 1
 ```
 
 
@@ -89,4 +92,47 @@ FROM students
 WHERE height >= 160 
 AND height <= 190 
 AND height%10 = 0
+```
+
+
+### 10
+
+```sql
+INSERT INTO students 
+VALUES (NULL, 'Parker', 'Antony', 199, 'M')
+```
+
+
+### 11
+
+```sql
+
+```
+
+
+### 12
+
+```sql
+
+```
+
+
+### 13
+
+```sql
+
+```
+
+
+### 14
+
+```sql
+
+```
+
+
+### 15
+
+```sql
+
 ```
