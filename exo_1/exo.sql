@@ -45,4 +45,4 @@ WHERE sex = "F" AND height > 160;
 SELECT height, COUNT(*)
 FROM students
 GROUP BY height
-HAVING COUNT(*) > 2;
+HAVING COUNT(*) > 1;
