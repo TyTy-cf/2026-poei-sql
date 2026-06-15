@@ -46,3 +46,25 @@ SELECT height, COUNT(*)
 FROM students
 GROUP BY height
 HAVING COUNT(*) > 1;
+
+-- 8
+
+SELECT *
+FROM students
+WHERE (height >= 170 AND height <= 190);
+
+-- 9
+
+SELECT *
+FROM students
+WHERE (height = 160 OR height = 170 OR height = 180 OR height = 190);
+
+-- 10
+
+INSERT INTO students (last_name, first_name, height, sex)
+VALUES ("Parker", "Antony", 199, "M");
+
+-- 11
+
+SELECT *, CONCAT(ROUND((height/100), 2), "m") AS height_real
+FROM students;
