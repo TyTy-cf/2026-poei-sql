@@ -1,8 +1,8 @@
 -- 1/ Afficher Une liste des ventes
 SELECT 
-    b.label, 
-    m.label, 
-    c.label, 
+    b.label as brand, 
+    m.label as model, 
+    c.label as category, 
     l.produce_year, 
     l.price,
     l.description,
@@ -26,7 +26,7 @@ SELECT
     l.description,
     l.publish_at,
     CONCAT(UPPER(s.first_name), " ", s.last_name) as "Nom vendeur",
-    s.location
+    s.location as vendor_adress
 
 FROM listings as l
 JOIN sellers AS s ON s.id = l.seller_id
@@ -46,6 +46,7 @@ JOIN brands AS b ON b.id = m.brand_id
 GROUP BY b.label;
 
 -- 4/ Même question qu'à la 1, sauf que l'on veut les 20 dernière annonces pour des renault de type Citadine ayant moins de 100000km
+    
 
 -- 5/ Même question qu'à la 5, sauf qu'il y a une limite de prix comprise entre 5000 et 9000€.
 
