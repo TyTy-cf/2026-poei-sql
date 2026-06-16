@@ -11,6 +11,8 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+CREATE DATABASE  IF NOT EXISTS `db_pokemon`;
+USE `db_pokemon`;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -46,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `pokemon` (
   `is_default` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `slug_idx` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=1118;x
+) ENGINE=InnoDB AUTO_INCREMENT=1118;
 
 --
 -- Déchargement des données de la table `pokemon`
