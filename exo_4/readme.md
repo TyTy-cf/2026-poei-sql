@@ -7,7 +7,7 @@
 
 ### 4/ Affichez le temps de jeu total par nom de compte
 
-### 5/ Reprendre la question 3, et n'afficher cette fois que les jeux installés (is_installed = 1)
+### 5/ Afficher par compte, le nombre de jeux installés qu'il possède, sur son nombre de jeu total (ex : 4/6 ; is_installed = 1)
 
 ### 6/ Afficher la valeur (somme du prix des jeux) de la bibliothèque (library) d'un compte (account)
 
