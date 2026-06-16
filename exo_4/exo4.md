@@ -85,21 +85,40 @@ HAVING c > 1
 ### 8
 
 ```sql
-
+SELECT
+    g.name,
+    COUNT(game_id)
+FROM `library` as l
+         JOIN game AS g ON g.id = l.game_id
+GROUP BY g.name
 ```
 
 
 ### 9
 
 ```sql
-
+SELECT 
+g.name,
+SUM(g.price),
+p.name
+FROM `library` as l
+JOIN game AS g ON g.id = l.game_id
+JOIN publisher AS p ON p.id = g.publisher_id
+GROUP BY g.name
 ```
 
 
 ### 10
 
 ```sql
-
+SELECT 
+ge.name,
+COUNT(l.game_id)
+FROM `library` as l
+JOIN game AS ga ON ga.id = l.game_id
+JOIN game_genre AS gg ON gg.game_id = ga.id
+JOIN genre AS ge ON ge.id = gg.genre_id
+GROUP BY ge.name
 ```
 
 
