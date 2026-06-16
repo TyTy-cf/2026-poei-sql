@@ -17,7 +17,8 @@ WHERE genre.name = 'FPS'
 ORDER BY published_at
 
 -- 4/ Affichez le temps de jeu total par nom de compte
-SELECT SUM(l.game_time) AS total_game_time,
+SELECT 
+    SUM(l.game_time) AS total_game_time,
     a.name AS account_name
 FROM library l 
 JOIN account a ON l.account_id = a.id
@@ -25,22 +26,55 @@ GROUP BY a.name
 ORDER BY total_game_time DESC
 
 
--- 5/ Reprendre la question 4, et n'afficher cette fois que les jeux installés (is_installed = 1)
-SELECT SUM(l.game_time) AS total_game_time,
+-- 5/ Afficher par compte, le nombre de jeux installés qu'il possède, sur son nombre de jeu total (ex : 4/6 ; installed = 1)
+SELECT 
+    SUM(l.installed) AS installed_games,
+    COUNT(g.id) AS total_games,
     a.name AS account_name
 FROM library l 
 JOIN account a ON l.account_id = a.id
+JOIN game g ON l.game_id = g.id
 GROUP BY a.name
-ORDER BY total_game_time DESC
+ORDER BY installed_games DESC
 
 -- 6/ Afficher la valeur (somme du prix des jeux) de la bibliothèque (library) d'un compte (account)
-
+SELECT 
+    SUM(g.price) AS total_price,
+    a.name AS account_name
+FROM library l 
+JOIN account a ON l.account_id = a.id
+JOIN game g ON l.game_id = g.id
+GROUP BY a.name
+ORDER BY total_price DESC
 
 -- 7/ Afficher les nicknames utilisés plusieurs fois
+SELECT 
+    COUNT(*) AS nickname_count,
+    nickname
+FROM account
+GROUP BY nickname
+HAVING nickname_count > 1
+    
 
 -- 8/ Afficher par jeux, le nombre de fois où il a été acheté
+SELECT
+    COUNT(*) AS purchase_counter,
+    g.*
+FROM library l
+JOIN game g ON l.game_id = g.id
+GROUP BY g.id
+ORDER BY purchase_counter DESC
 
 -- 9/ Afficher par jeux, son revenu total à son éditeur
+SELECT
+    SUM(g.price) AS gross_revenue,
+    g.name AS game_name,
+    p.name AS publisher_name
+FROM library l
+JOIN game g ON l.game_id = g.id
+JOIN publisher p ON g.publisher_id = p.id
+GROUP BY g.id
+ORDER BY gross_revenue DESC
 
 -- 10/ Afficher par genre, son nombre de fois où il a été vendu
 
