@@ -20,7 +20,7 @@ On affichera que les informations suivantes :
 
 ### 6/ Afficher les emails des vendeurs ayant passé des anonces au cours des 8 dernières années
 
-### 7/ Prix moyen des ventes sur les 5 dernières années
+### 7/ Prix moyen des ventes sur les 8 dernières années
 
 ### 8/ Chiffre affaire par marque de voiture
 
