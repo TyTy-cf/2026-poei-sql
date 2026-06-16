@@ -16,6 +16,10 @@ WHERE sex = "M";
 SELECT COUNT(*) FROM students
 WHERE sex = "F";
 
+SELECT sex, COUNT(*)
+FROM students
+GROUP BY sex;
+
 
 SELECT COUNT(*) FROM students
 WHERE sex = "M" AND height < 160;
@@ -23,7 +27,10 @@ SELECT COUNT(*) FROM students
 WHERE sex = "F" AND height > 160;
 
 
-HAVING UNE PROCHAINE FOIS;
+SELECT height, COUNT(*) AS nb_height
+FROM students
+GROUP BY height
+HAVING nb_height > 1;
 
 
 SELECT * FROM `students`
