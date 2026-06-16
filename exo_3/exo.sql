@@ -7,8 +7,8 @@ SELECT
     l.produce_year, 
     l.price, 
     l.description, 
-    s.last_name, 
-    s.first_name, 
+    DATE_FORMAT(l.publish_at, '%d/%m/%Y %H:%i:%s'),
+    CONCAT(s.first_name, " ", UPPER(s.last_name)) AS "Nom", 
     s.location
 FROM models AS m
 JOIN brands AS b ON b.id = m.brand_id
@@ -39,11 +39,12 @@ LIMIT 20;
 -- 3
 
 SELECT 
-    m.label AS model_label, 
+    b.label AS brand_label, 
     COUNT(l.model_id) AS sell_amount
-FROM models AS m
+FROM brands AS b
+JOIN models AS m ON m.brand_id = b.id
 JOIN listings AS l ON l.model_id = m.id
-GROUP BY model_label;
+GROUP BY brand_label;
 
 -- 4 
 
@@ -97,4 +98,28 @@ LIMIT 20;
 SELECT s.email, l.publish_at
 FROM sellers AS s
 JOIN listings AS l ON l.seller_id = s.id
-WHERE l.publish_at >= "2018-06-16";
+WHERE l.publish_at >= "2010-06-16";
+
+-- 7
+
+SELECT AVG(price)
+FROM listings
+WHERE publish_at >= "2013-06-16";
+
+-- 8
+
+SELECT b.label, SUM(l.price)
+FROM listings AS l
+JOIN models AS m ON m.id = l.model_id
+JOIN brands AS b ON b.id = m.brand_id
+GROUP BY b.id DESC;
+
+-- 9
+
+SELECT 
+    CONCAT(s.first_name, " ", UPPER(s.last_name)) AS "Nom vendeur", 
+    COUNT(*) AS sell
+FROM listings AS l
+JOIN sellers AS s ON s.id = l.seller_id
+GROUP BY l.seller_id
+ORDER BY sell DESC;
