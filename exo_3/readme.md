@@ -14,9 +14,9 @@ On affichera que les informations suivantes :
 
 ### 3/ Afficher le nombre d'annonces de vente par marque de voiture
 
-### 4/ Même question qu'à la 4, sauf que l'on veut les 20 dernière annonces pour des renault de type Citadine ayant moins de 100000km
+### 4/ Même question qu'à la 1, sauf que l'on veut les 20 dernière annonces pour des renault de type Citadine ayant moins de 100000km
 
-### 5/ Même question qu'à la 7, sauf qu'il y a une limite de prix comprise entre 5000 et 9000€.
+### 5/ Même question qu'à la 4, sauf qu'il y a une limite de prix comprise entre 5000 et 9000€.
 
 ### 6/ Afficher les emails des vendeurs ayant passé des anonces au cours des 12 derniers mois
 
