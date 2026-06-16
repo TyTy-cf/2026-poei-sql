@@ -77,18 +77,73 @@ GROUP BY g.id
 ORDER BY gross_revenue DESC
 
 -- 10/ Afficher par genre, son nombre de fois où il a été vendu
+SELECT
+    genre.name AS genre_name,
+    COUNT(*) AS genre_counter,
+    SUM(g.price) AS genre_revenue
+
+FROM library l
+JOIN game g ON l.game_id = g.id
+JOIN game_genre ON g.id = game_genre.game_id
+JOIN genre ON game_genre.genre_id = genre.id
+GROUP BY genre.id
+ORDER BY genre_revenue DESC
 
 -- 11/ Afficher le top 3 des jeux les plus vendu
+SELECT
+    COUNT(*) AS purchase_counter,
+    g.*
+FROM library l
+JOIN game g ON l.game_id = g.id
+GROUP BY g.id
+ORDER BY purchase_counter DESC
+LIMIT 3
 
 -- 12/ Afficher le top 3 des jeux les plus joués (temps de jeu cumulé parmi toutes les library les plus élevé)
+SELECT 
+    SUM(l.game_time) AS total_game_time,
+    g.name AS game_name
+FROM library l 
+JOIN game g ON l.game_id = g.id
+GROUP BY g.id
+ORDER BY total_game_time DESC
+LIMIT 3
 
 -- 13/ Afficher les différents jeux par année, sous une même colonne
+SELECT 
+    EXTRACT(YEAR FROM g.published_at) AS year,
+    g.name AS game_name
+FROM game g
+ORDER BY year DESC
+
 
 -- 14/ Le jeu le plus ancien
+SELECT 
+    EXTRACT(YEAR FROM g.published_at) AS year,
+    g.name AS game_name
+FROM game g
+ORDER BY year ASC
+LIMIT 1
+
 
 -- 15/ Afficher les jeux avec leur note moyenne (table comment, colonne rank)
+SELECT 
+    g.name AS game_name,
+    AVG(c.rank) AS average_rank
+FROM comment c
+JOIN game g ON c.game_id = g.id
+GROUP BY g.id
+ORDER BY average_rank DESC
 
 -- 16/ Afficher le jeu ayant le plus de commentaire négatif (colonne down_votes)
+SELECT 
+    g.name AS game_name,
+    SUM(c.down_votes) AS total_down_votes
+FROM comment c
+JOIN game g ON c.game_id = g.id
+GROUP BY g.id
+ORDER BY total_down_votes DESC
+LIMIT 1
 
 -- 17/ Afficher les jeux dont la moyenne des commentaires (rank) est supérieur à la moyenne globale
 
