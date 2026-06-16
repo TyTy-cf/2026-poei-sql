@@ -19,17 +19,17 @@ ORDER BY l.publish_at DESC LIMIT 20;
 
 -- 3-3
 
-SELECT b.label, SUM(b.id) AS nb_listings
+SELECT b.label, COUNT(b.id) AS nb_listings
 FROM listings AS l
          JOIN models AS m ON l.model_id = m.id
          JOIN brands AS b ON m.brand_id = b.id
 GROUP BY b.label;
 
-# Audi,856
-# Ford,440
-# Peugeot,549
+# Audi,428
+# Ford,88
+# Peugeot,183
 # Renault,214
-# Tesla,332
+# Tesla,83
 
 -- 3-4
 
@@ -60,11 +60,11 @@ FROM listings AS l
          JOIN sellers AS s ON l.seller_id = s.id
 WHERE l.publish_at >= DATE_SUB(NOW(), INTERVAL 8 YEAR);
 
--- 3-7 j'ai fait sur les 10 dernières années
+-- 3-7 j'ai fait sur les 12 dernières années
 
 SELECT AVG(l.price)
 FROM listings AS l
-WHERE l.publish_at >= DATE_SUB(NOW(), INTERVAL 10 YEAR);
+WHERE l.publish_at >= DATE_SUB(NOW(), INTERVAL 12 YEAR);
 
 -- 3-8
 
