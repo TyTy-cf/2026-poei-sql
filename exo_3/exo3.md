@@ -49,9 +49,10 @@ LIMIT 20
 
 ```sql
 SELECT COUNT(b.label),
-b.label
+       b.label
 FROM `listings` AS l
-JOIN brands AS b ON b.id = l.model_id
+         JOIN models AS m ON m.id = l.model_id
+         JOIN brands AS b ON b.id = m.brand_id
 GROUP BY b.label
 ```
 
@@ -115,26 +116,42 @@ LIMIT 20
 ### 6
 
 ```sql
-
+SELECT s.email 
+FROM `listings` AS l
+JOIN sellers AS s ON s.id = l.seller_id
+WHERE l.publish_at > DATE_ADD(CURRENT_DATE, INTERVAL '-8.0' YEAR_MONTH)
 ```
 
 
 ### 7
 
 ```sql
-
+SELECT AVG(price)
+FROM listings
+WHERE publish_at > DATE_SUB(CURRENT_DATE, INTERVAL '12.0' YEAR_MONTH);
 ```
 
 
 ### 8
 
 ```sql
-
+SELECT 
+b.label,
+SUM(l.price) AS "Chiffre d'affaire"
+FROM `listings` AS l 
+JOIN models AS m ON m.id = l.model_id
+JOIN brands AS b ON b.id = m.brand_id
+GROUP BY b.label
 ```
 
 
 ### 9
 
 ```sql
-
+SELECT 
+COUNT(seller_id) AS "Nombre de ventes",
+CONCAT(UPPER(s.last_name), ' ',s.first_name) AS "Nom Vendeur"
+FROM listings AS l
+JOIN sellers AS s ON s.id = l.seller_id
+group by seller_id
 ```
