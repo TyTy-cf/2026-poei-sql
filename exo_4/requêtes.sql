@@ -18,9 +18,9 @@ ORDER BY g.published_at;
 
 SELECT SUM(game_time) AS game_time, a.name FROM library as l
 JOIN account AS a ON a.id = l.account_id
-GROUP BY l.account_id ORDER BY game_time DESC;
+GROUP BY l.account_id;
 
--- 4-5 Pas sur de comprendre
+-- 4-5
 
 SELECT CONCAT(COUNT(IF(l.installed, 1, NULL)), '/', COUNT(l.game_id)) AS nb_games_installed, a.name FROM library as l
 JOIN account AS a ON a.id = l.account_id
@@ -125,4 +125,31 @@ JOIN genre ON game_genre.genre_id = genre.id
 GROUP BY genre.name
 ORDER BY sum_game_prices DESC LIMIT 1;
 
--- 4-20
+-- 4-20 BRO JE SAIS PAS
+
+SELECT a.name, COUNT(gc.game_id), g.name FROM library as l
+JOIN account AS a ON a.id = l.account_id
+JOIN game AS g ON l.game_id = g.id
+JOIN game_country AS gc ON gc.game_id = g.id
+WHERE a.country_id != gc.country_id
+GROUP BY l.account_id;
+
+-- 4-21
+
+SELECT country_id, (COUNT(country_id)/(SELECT COUNT(*) FROM account))*100 FROM account group by country_id;
+
+-- 4-22
+
+DELETE FROM library WHERE id =
+(SELECT l.id
+FROM library AS l
+GROUP BY game_id, account_id
+HAVING COUNT(*) > 1);
+
+-- 4-23
+
+SELECT * FROM comment AS c
+JOIN account AS a ON c.account_id = a.id
+JOIN game AS g ON c.game_id = g.id
+JOIN library AS l ON a.id = l.account_id and g.id = l.game_id
+GROUP BY
