@@ -33,6 +33,7 @@ JOIN sellers AS s ON s.id = l.seller_id
 JOIN models AS m ON m.id = l.model_id
 JOIN brands AS b ON b.id = m.brand_id
 JOIN categories AS c ON c.id = m.category_id
+ORDER BY l.publish_at DESC
 LIMIT 20;
 
 -- 3/ Afficher le nombre d'annonces de vente par marque de voiture
