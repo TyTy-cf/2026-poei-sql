@@ -107,7 +107,6 @@ SELECT FORMAT(AVG(l.price), 2) AS Moy_vente
 
 FROM listings as l
 
-
 WHERE l.publish_at >= DATE_SUB(NOW(), INTERVAL 10 YEAR)
 
 -- 8) ------------------------
