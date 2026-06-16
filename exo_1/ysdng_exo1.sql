@@ -85,7 +85,7 @@ FROM students
 WHERE first_name = 'maxine';
 
 -- 14) ------------------
-SELECT *, IF(sex = 'M', 'Homme', 'Femme') as sex_full
+SELECT *, IF(sex = 'M', 'Homme', 'Femme')   as sex_full
 FROM students;
 
 -- 15)---------
