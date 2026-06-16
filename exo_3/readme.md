@@ -18,7 +18,7 @@ On affichera que les informations suivantes :
 
 ### 5/ Même question qu'à la 4, sauf qu'il y a une limite de prix comprise entre 5000 et 9000€.
 
-### 6/ Afficher les emails des vendeurs ayant passé des anonces au cours des 12 derniers mois
+### 6/ Afficher les emails des vendeurs ayant passé des anonces au cours des 8 dernières années
 
 ### 7/ Prix moyen des ventes sur les 5 dernières années
 
