@@ -18,8 +18,8 @@ SELECT * FROM pokemon ORDER BY height ASC LIMIT 1;
 
 -- 2-5
 
-SELECT * FROM pokemon ORDER BY spd ASC LIMIT 1;
--- Chenipan
+SELECT * FROM pokemon ORDER BY spe ASC LIMIT 1;
+-- Concombaffe
 
 -- 2-6
 
@@ -57,4 +57,4 @@ SELECT * FROM pokemon ORDER BY base_experience LIMIT 1;
 
 -- 2-14
 
-SELECT name, CONCAT(ROUND((base_experience / (hp+atk+def+spa+spd+spe))*100, 2), "%") AS rapport FROM pokemon;
+SELECT name, CONCAT(ROUND((base_experience / (hp+atk+def+spa+spd+spe))*100, 2), "%") AS rapport FROM pokemon ORDER BY ROUND((base_experience / (hp+atk+def+spa+spd+spe))*100, 2) DESC;
