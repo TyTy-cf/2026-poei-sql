@@ -125,56 +125,102 @@ GROUP BY ge.name
 ### 11
 
 ```sql
-
+SELECT 
+COUNT(game_id) AS "Nombre de ventes",
+g.name
+FROM `library`AS l
+JOIN game AS g ON g.id = l.game_id
+GROUP BY g.name
+ORDER by "Nombre de ventes" DESC
+LIMIT 3
 ```
 
 
 ### 12
 
 ```sql
-
+SELECT 
+SUM(game_time) AS "Heures de jeu total",
+g.name
+FROM `library`AS l
+JOIN game AS g ON g.id = l.game_id
+GROUP BY g.name
+ORDER by "Heures de jeu total" DESC
+LIMIT 3
 ```
 
 
 ### 13
 
 ```sql
-
+SELECT
+    YEAR(published_at) AS "Année de sortie",
+    name
+FROM game
+ORDER BY published_at DESC
 ```
 
 
 ### 14
 
 ```sql
-
+SELECT 
+published_at,
+name
+FROM `game` as g
+JOIN library as l on l.game_id = g.id
+ORDER by published_at ASC
+LIMIT 1
 ```
 
 
 ### 15
 
 ```sql
-
+SELECT 
+g.name,
+AVG(cmt.rank) AS "note moyenne"
+FROM `game` AS g
+JOIN comment AS cmt ON cmt.game_id = g.id
+GROUP BY g.id
 ```
 
 
 ### 16
 
 ```sql
-
+SELECT 
+g.name,
+COUNT(cmt.down_votes) AS dv
+FROM `game` AS g
+JOIN comment AS cmt ON cmt.game_id = g.id
 ```
 
 
 ### 17
 
 ```sql
-
+SELECT 
+g.name
+FROM `game` AS g
+JOIN comment AS cmt ON cmt.game_id = g.id
+WHERE cmt.rank > (
+    SELECT AVG(cmt.rank)
+    FROM `game` AS g
+	JOIN comment AS cmt ON cmt.game_id = g.id
+)
+GROUP BY g.id
 ```
 
 
 ### 18
 
 ```sql
-
+SELECT
+    a.name
+FROM `account` AS a
+         LEFT JOIN library AS l ON l.account_id = a.id
+WHERE l.game_id IS NULL
 ```
 
 
