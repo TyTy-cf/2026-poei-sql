@@ -1,6 +1,6 @@
 ### 1/ Afficher le nom des pokémons n’étant pas la forme par défaut (colonne is_default)
 
-### 2/ Afficher la moyenne des statistiques pour tous les pokemons (moyenne de : hp, atk, def, spa, spd et spe)
+### 2/ Afficher la moyenne des statistiques pougit r tous les pokemons (moyenne de : hp, atk, def, spa, spd et spe)
 
 ### 3/ Afficher le pokémon le plus lourd
 
