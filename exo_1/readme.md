@@ -29,5 +29,3 @@
 ### 13/ Supprimer les étudiants dont le « first_name » vaut « Maxine »
 
 ### 14/ Afficher les étudiants, mais en précisant que « F » est « Femme » et « M » est « Homme »
-
-### 15/ Cumulez l’affichage des étudiants avec la question 2 et la question 5
