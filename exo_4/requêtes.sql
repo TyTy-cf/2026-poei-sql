@@ -22,9 +22,9 @@ GROUP BY l.account_id ORDER BY game_time DESC;
 
 -- 4-5 Pas sur de comprendre
 
-# SELECT CONCAT(COUNT()) AS game_time, a.name FROM library as l
-# JOIN account AS a ON a.id = l.account_id
-# GROUP BY l.account_id ORDER BY game_time DESC;
+SELECT CONCAT(COUNT(IF(l.installed, 1, NULL)), '/', COUNT(l.game_id)) AS nb_games_installed, a.name FROM library as l
+JOIN account AS a ON a.id = l.account_id
+GROUP BY l.account_id;
 
 -- 4-6
 
@@ -85,3 +85,44 @@ GROUP BY game_id ORDER BY sum_time_played DESC LIMIT 3;
 
 -- 4-13
 
+SELECT YEAR(g.published_at) AS year, GROUP_CONCAT(g.name SEPARATOR ', ') AS games FROM game AS g GROUP BY YEAR(g.published_at);
+
+-- 4-14
+
+SELECT * FROM game AS g ORDER BY g.published_at ASC LIMIT 1;
+
+-- 4-15
+
+SELECT g.name, ROUND(AVG(c.rank), 2) AS avg_rank FROM game AS g
+JOIN comment AS c ON c.game_id = g.id
+GROUP BY g.id ;
+
+-- 4-16
+
+SELECT g.name, ROUND(AVG(c.rank), 2) AS avg_rank FROM game AS g
+JOIN comment AS c ON c.game_id = g.id
+GROUP BY g.id ORDER BY avg_rank LIMIT 1;
+
+-- 4-17
+
+SELECT g.name, ROUND(AVG(c.rank), 2) AS avg_rank FROM game AS g
+JOIN comment AS c ON c.game_id = g.id
+GROUP BY g.id
+HAVING AVG(c.rank) > (SELECT AVG(c.rank) FROM comment AS c);
+
+-- 4-18
+
+SELECT SUM(l.game_id) AS sum_games_owned, a.name FROM library as l
+JOIN account AS a ON a.id = l.account_id
+GROUP BY l.account_id HAVING SUM(l.game_id) = 0;
+
+-- 4-19 ACTION
+
+SELECT COUNT(l.game_id) AS sum_game_prices, genre.name FROM library as l
+JOIN game AS g ON l.game_id = g.id
+JOIN game_genre ON g.id = game_genre.game_id
+JOIN genre ON game_genre.genre_id = genre.id
+GROUP BY genre.name
+ORDER BY sum_game_prices DESC LIMIT 1;
+
+-- 4-20
