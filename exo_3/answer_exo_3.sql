@@ -66,7 +66,7 @@ WHERE c.label = "Citadine"
 AND l.mileage < 100000
 ORDER BY l.mileage;
 
--- 5/ Même question qu'à la 5, sauf qu'il y a une limite de prix comprise entre 5000 et 9000€.
+-- 5/ Même question qu'à la 4, sauf qu'il y a une limite de prix comprise entre 5000 et 9000€.
 SELECT 
     b.label as brand, 
     m.label as model, 
