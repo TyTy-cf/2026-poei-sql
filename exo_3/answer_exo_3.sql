@@ -46,14 +46,85 @@ JOIN brands AS b ON b.id = m.brand_id
 GROUP BY b.label;
 
 -- 4/ Même question qu'à la 1, sauf que l'on veut les 20 dernière annonces pour des renault de type Citadine ayant moins de 100000km
-    
+SELECT 
+    b.label as brand, 
+    m.label as model, 
+    c.label as category, 
+    l.produce_year, 
+    l.price,
+    l.description,
+    l.publish_at,
+    CONCAT(UPPER(s.first_name), " ", s.last_name) as "Nom vendeur",
+    s.location
+
+FROM listings as l
+JOIN sellers AS s ON s.id = l.seller_id
+JOIN models AS m ON m.id = l.model_id
+JOIN brands AS b ON b.id = m.brand_id
+JOIN categories AS c ON c.id = m.category_id
+WHERE c.label = "Citadine"
+AND l.mileage < 100000
+ORDER BY l.mileage;
 
 -- 5/ Même question qu'à la 5, sauf qu'il y a une limite de prix comprise entre 5000 et 9000€.
+SELECT 
+    b.label as brand, 
+    m.label as model, 
+    c.label as category, 
+    l.produce_year, 
+    l.price,
+    l.description,
+    l.publish_at,
+    CONCAT(UPPER(s.first_name), " ", s.last_name) as "Nom vendeur",
+    s.location
+
+FROM listings as l
+JOIN sellers AS s ON s.id = l.seller_id
+JOIN models AS m ON m.id = l.model_id
+JOIN brands AS b ON b.id = m.brand_id
+JOIN categories AS c ON c.id = m.category_id
+WHERE c.label = "Citadine"
+AND l.mileage < 100000
+AND l.price > 5000
+AND l.price < 9000;
 
 -- 6/ Afficher les emails des vendeurs ayant passé des anonces au cours des 12 derniers mois
+SELECT 
+    CONCAT(UPPER(s.first_name), " ", s.last_name) as "Nom vendeur",
+    s.email,
+    l.publish_at
+
+FROM listings as l
+JOIN sellers AS s ON s.id = l.seller_id
+WHERE l.publish_at >= (SELECT DATE_SUB(MAX(publish_at), INTERVAL 12 MONTH) FROM listings);
 
 -- 7/ Prix moyen des ventes sur les 5 dernières années
 
+SELECT
+    AVG(l.price) as avg_selling_price
+
+FROM listings as l
+JOIN sellers AS s ON s.id = l.seller_id
+WHERE l.publish_at >= (SELECT DATE_SUB(MAX(publish_at), INTERVAL 5 * 12 MONTH) FROM listings);
+
 -- 8/ Chiffre affaire par marque de voiture
+SELECT 
+    b.label as brand,
+    AVG(l.price) as avg_selling_price
+
+FROM listings as l
+JOIN models AS m ON m.id = l.model_id
+JOIN brands AS b ON b.id = m.brand_id
+GROUP BY brand
+
 
 -- 9/ Afficher le nombre d'annonces par vendeurs, en affichant le nom en majuscule et le prénom du vendeur sous le label "Nom vendeur"
+SELECT 
+    COUNT(*) as "nbr_of_listing(s)",
+    CONCAT(UPPER(s.first_name), " ", s.last_name) as "Nom vendeur"
+    
+
+FROM listings as l
+JOIN sellers AS s ON s.id = l.seller_id
+GROUP BY CONCAT(UPPER(s.first_name), " ", s.last_name)
+ORDER BY COUNT(*) DESC;
