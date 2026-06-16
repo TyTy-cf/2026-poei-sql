@@ -21,7 +21,7 @@ GROUP BY id
 ```sql
 SELECT *
 FROM `pokemon`
-GROUP BY weight DESC
+ORDER BY weight DESC
 LIMIT 1
 ```
 
@@ -31,7 +31,7 @@ LIMIT 1
 ```sql
 SELECT *
 FROM `pokemon`
-GROUP BY height
+ORDER BY height
 LIMIT 1
 ```
 
@@ -41,7 +41,7 @@ LIMIT 1
 ```sql
 SELECT *
 FROM `pokemon`
-GROUP BY spe
+ORDER BY spe
 LIMIT 1
 ```
 
@@ -52,7 +52,7 @@ LIMIT 1
 SELECT *
 FROM `pokemon`
 WHERE atk > 150
-GROUP BY atk DESC 
+ORDER BY atk DESC 
 ```
 
 
@@ -98,7 +98,7 @@ WHERE length(name) <= 3
 SELECT name,
        (hp+atk+def+spa+spd+spe) AS total_stats
 FROM `pokemon`
-GROUP BY total_stats DESC
+ORDER BY total_stats DESC
 LIMIT 1
 ```
 
@@ -108,7 +108,7 @@ LIMIT 1
 ```sql
 SELECT *
 FROM `pokemon`
-GROUP BY base_experience
+ORDER BY base_experience
 LIMIT 1
 ```
 
