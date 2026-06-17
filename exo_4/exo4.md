@@ -155,9 +155,10 @@ LIMIT 3
 ```sql
 SELECT
     YEAR(published_at) AS "Année de sortie",
-    name
+    GROUP_CONCAT(name,' ') AS games
 FROM game
-ORDER BY published_at DESC
+GROUP BY YEAR(published_at)
+ORDER BY YEAR(published_at) DESC
 ```
 
 
@@ -194,6 +195,7 @@ g.name,
 COUNT(cmt.down_votes) AS dv
 FROM `game` AS g
 JOIN comment AS cmt ON cmt.game_id = g.id
+ORDER BY dv DESC
 ```
 
 
@@ -284,20 +286,18 @@ GROUP BY country_id
 
 
 ### 23
-ne fonctionne pas
 
 ```sql
-SELECT 
-a.name
-FROM `account` AS a
-WHERE g.id IS IN (
-    SELECT game_id
-    FROM `comment`
-    )
-AND g.id IS NOT IN (
-    SELECT game_id
+SELECT
+    DISTINCT a.name
+FROM library AS l
+         JOIN account AS a ON a.id = l.account_id
+         JOIN `comment` AS c ON c.account_id = a.id
+WHERE c.game_id NOT IN(
+    SELECT l.game_id
     FROM library
-    )
+    WHERE l.account_id = a.id
+)
 ```
 
 
