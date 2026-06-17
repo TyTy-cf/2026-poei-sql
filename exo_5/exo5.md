@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `account` (
     `password` varchar(255) NOT NULL,
     `birth_date` date DEFAULT NULL,
     `gender` ENUM ('H','F','NB','A','NR') NOT NULL,
-    `newsletter` TINYINT NOT NULL,
+    `newsletter` tinyint(1) NOT NULL,
     `created_at` datetime NOT NULL,
     PRIMARY KEY (`id`)
     );
