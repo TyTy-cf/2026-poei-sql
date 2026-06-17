@@ -28,9 +28,9 @@ ORDER BY total_game_time DESC
 
 -- 5/ Afficher par compte, le nombre de jeux installés qu'il possède, sur son nombre de jeu total (ex : 4/6 ; installed = 1)
 SELECT 
+    a.name AS account_name,
     SUM(l.installed) AS installed_games,
-    COUNT(g.id) AS total_games,
-    a.name AS account_name
+    COUNT(g.id) AS total_games
 FROM library l 
 JOIN account a ON l.account_id = a.id
 JOIN game g ON l.game_id = g.id
@@ -79,15 +79,15 @@ ORDER BY gross_revenue DESC
 -- 10/ Afficher par genre, son nombre de fois où il a été vendu
 SELECT
     genre.name AS genre_name,
-    COUNT(*) AS genre_counter,
+    COUNT(*) AS sell_counter,
     SUM(g.price) AS genre_revenue
 
 FROM library l
 JOIN game g ON l.game_id = g.id
 JOIN game_genre ON g.id = game_genre.game_id
 JOIN genre ON game_genre.genre_id = genre.id
-GROUP BY genre.id
-ORDER BY genre_revenue DESC
+GROUP BY genre_name
+ORDER BY sell_counter DESC
 
 -- 11/ Afficher le top 3 des jeux les plus vendu
 SELECT
@@ -132,7 +132,7 @@ SELECT
     AVG(c.rank) AS average_rank
 FROM comment c
 JOIN game g ON c.game_id = g.id
-GROUP BY g.id
+GROUP BY g.name
 ORDER BY average_rank DESC
 
 -- 16/ Afficher le jeu ayant le plus de commentaire négatif (colonne down_votes)
@@ -146,17 +146,66 @@ ORDER BY total_down_votes DESC
 LIMIT 1
 
 -- 17/ Afficher les jeux dont la moyenne des commentaires (rank) est supérieur à la moyenne globale
+SELECT 
+    g.name AS game_name,
+    c.rank
+FROM comment c
+JOIN game g ON c.game_id = g.id
+WHERE c.rank > (select AVG(rank) from comment)
+GROUP BY g.id
 
 -- 18/ Afficher les account n’ayant jamais acheté de jeu
+SELECT
+    a.name AS account_name
+FROM account a
+LEFT JOIN library l ON a.id = l.account_id
+WHERE l.game_id IS NULL
 
 -- 19/ Afficher le genre le plus acheté
+SELECT
+    count(*) AS purchase_counter,
+    genre.name AS genre_name
+FROM library l
+JOIN game g ON l.game_id = g.id
+JOIN game_genre ON g.id = game_genre.game_id
+JOIN genre ON game_genre.genre_id = genre.id
+GROUP BY genre.id
+ORDER BY purchase_counter DESC
+LIMIT 1
 
 -- 20/ Afficher les noms de compte ayant acheté un jeu, qui n’est pas dans leur langue natale.
+SELECT DISTINCT 
+    a.nickname AS acc_nickname
+FROM account a
+JOIN library l ON a.id = l.account_id
+WHERE a.country_id NOT IN (
+    SELECT gc.country_id 
+    FROM game_country gc 
+    WHERE gc.game_id = l.game_id
+);
 
 -- 21/ Afficher le ratio de présence des accounts par pays dans l’application
+SELECT 
+    c.name as country_name,
+    COUNT(DISTINCT a.id) AS acc_count,
+    ROUND((COUNT(DISTINCT a.id) / (SELECT COUNT(*) FROM account)) * 100, 2) AS acc_percentage
+FROM account a
+JOIN library l ON a.id = l.account_id
+JOIN country c ON a.country_id = c.id
+GROUP BY c.name
+ORDER BY acc_percentage DESC
+
+
 
 -- 22/ Faire une requête pour supprimer les doublons de la table libraries (paire game_id et account_id)
+SELECT 
+    g.id as game_id,
+    a.id as account_id
+FROM account a 
+JOIN game g ON l.game_id = g.id
+
+
 
 -- 23/ Faire une requête pour afficher les utilisateurs qui ont mis des commentaires à des jeux non présents dans leur bibliothèque
 
--- 24/ Afficher les jeux dont leur total de downvote supérieur au total d'upvotes, MAIS un rank supérieur à la moyenne globale des rank de tous les commentaires. un event, qui supprime les utilisateurs qui ont plus de 5 ans dans l’application et qui n’ont pas acheté de jeu.
+-- 24/ Afficher les jeux dont leur total de downvote supérieur au total d'upvotes, MAIS un rank supérieur à la moyenne globale des rank de tous les commentaires.
