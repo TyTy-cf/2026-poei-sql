@@ -92,4 +92,64 @@ GROUP BY publisher.id;
 
 
 
-SELECT
+SELECT publisher.id,
+       publisher.name,
+       SUM(game.price) AS totalEarned
+FROM library
+         JOIN game ON library.game_id = game.id
+         JOIN publisher ON game.publisher_id = publisher.id
+GROUP BY publisher.id;
+
+
+
+SELECT genre.id,
+       genre.name,
+       COUNT(*)
+
+FROM library
+
+JOIN game ON library.game_id = game.id
+JOIN game_genre ON game.id = game_genre.game_id
+JOIN genre ON game_genre.genre_id = genre.id
+
+GROUP BY genre.id;
+
+
+
+SELECT game.id,
+       game.name,
+       COUNT(*) AS nbVentes
+FROM library
+         JOIN game ON library.game_id = game.id
+         JOIN publisher ON game.publisher_id = publisher.id
+GROUP BY game.id
+ORDER BY COUNT(*)
+LIMIT 3;
+
+
+SELECT game.id,
+       game.name,
+       SUM(game_time)
+FROM library
+         JOIN game ON library.game_id = game.id
+         JOIN publisher ON game.publisher_id = publisher.id
+GROUP BY game.id
+ORDER BY COUNT(*)
+LIMIT 3;
+
+
+
+SELECT name,
+       YEAR(published_at)
+
+FROM game
+ORDER BY published_at;
+
+
+
+SELECT name,
+       published_at
+FROM game
+WHERE published_at = (SELECT MIN(published_at)
+                      FROM game);
+
