@@ -142,12 +142,30 @@ LIMIT 1 ;
 
 ### 17/ Afficher les jeux dont la moyenne des commentaires (rank) est supérieur à la moyenne globale
 
+SELECT g.name 
+FROM game g
+JOIN comment c ON g.id = c.game_id
+WHERE
+(SELECT  AVG(c.rank)  FROM comment c)
+GROUP BY g.name;
+
+
 
 
 
 ### 18/ Afficher les account n’ayant jamais acheté de jeu
 
+
+SELECT a.name , l.installed
+FROM account a
+LEFT JOIN library l ON a.id = l.account_id
+LEFT JOIN game g ON  l.game_id = g.id
+WHERE  l.installed IS NULL;
+
+
 ### 19/ Afficher le genre le plus acheté
+
+
 
 ### 20/ Afficher les noms de compte ayant acheté un jeu, qui n’est pas dans leur langue natale.
 
