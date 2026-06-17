@@ -220,9 +220,9 @@ FROM account a
 JOIN comment c ON c.account_id = a.id
 JOIN library l ON l.account_id = a.id
 WHERE c.game_id NOT IN (
-    SELECT 
-    game_id
-    FROM library
-)
+    SELECT l.game_id 
+    FROM library l 
+    WHERE l.account_id = a.id
+);
 
 -- 24/ Afficher les jeux dont leur total de downvote supérieur au total d'upvotes, MAIS un rank supérieur à la moyenne globale des rank de tous les commentaires.
