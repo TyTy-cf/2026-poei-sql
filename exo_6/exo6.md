@@ -42,7 +42,7 @@ GROUP BY a.name
 ```sql
 SELECT 
 a.name AS "Nom Album",
-SUM(sg.duration) AS "Durée totale",
+SEC_TO_TIME(SUM(sg.duration)) AS "Durée totale",
 COUNT(sg.id) AS "Nombre de chansons"
 FROM `album` AS a
 JOIN album_song AS asg ON asg.album_id = a.id
@@ -76,21 +76,35 @@ FROM `account`
 ### 7
 
 ```sql
-
+SELECT 
+SUM(newsletter) AS "Nombre d'abonnés",
+gender,
+CASE
+	WHEN gender = 'F' THEN 'Femme'
+	WHEN gender = 'H' THEN 'Homme'
+	WHEN gender = 'NB' THEN 'Non-Binaire'
+	WHEN gender = 'NR' THEN 'Non renseigné'
+END AS "genre"
+FROM `account`
+GROUP BY gender
 ```
 
 
 ### 8
 
-```sql
-
-```
+Il existe pas :c
 
 
 ### 9
 
 ```sql
-
+SELECT
+s.name,
+COUNT(asu.subscription_id) AS "Nombre d'abonnés"
+FROM `subscription` AS s
+JOIN account_subscription AS asu ON asu.subscription_id = s.id
+WHERE YEAR(asu.effective_at) = 2021
+GROUP BY s.name
 ```
 
 
