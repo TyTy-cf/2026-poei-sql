@@ -53,14 +53,23 @@ JOIN song AS sg ON sg.id = asg.song_id
 ### 5
 
 ```sql
-
+SELECT 
+name,
+created_at
+FROM `artist` 
+WHERE YEAR(created_at) = (
+    SELECT MIN(YEAR(created_at))
+    FROM artist
+    )
 ```
 
 
 ### 6
 
 ```sql
-
+SELECT 
+AVG(YEAR(CURRENT_DATE)-YEAR(birth_date)) AS "Âge moyen des utilisateurs"
+FROM `account`
 ```
 
 
