@@ -41,13 +41,12 @@ GROUP BY a.id, a.name;
 
 -- 6)-------------------
 
-SELECT a.name, SUM(g.price) as price_Total
-FROM game g
-         JOIN library l ON g.id = l.game_id
-         JOIN account a ON a.id = l.account_id
+SELECT a.name, IF(SUM(g.price) IS NULL, 0, SUM(g.price)) AS library_value
+FROM account a
+         LEFT JOIN library l ON a.id = l.account_id
+         LEFT JOIN game g ON l.game_id = g.id
 GROUP BY a.id
-ORDER BY price_total DESC;
-
+ORDER BY library_value DESC
 
 -- 7)-------------------
 SELECT COUNT(*),
@@ -58,33 +57,27 @@ HAVING COUNT(*) > 1
 
 
 -- 8)--------------
-SELECT COUNT(*),
+SELECT COUNT(l.game_id),
        g.name
 FROM game g
-         JOIN library l
-              ON l.game_id = g.id
-         JOIN account a
-              ON a.id = l.account_id
+         LEFT JOIN library l
+                   ON l.game_id = g.id
 
 WHERE g.id = l.game_id
 GROUP BY g.name
-ORDER BY COUNT(*) DESC
+ORDER BY `COUNT(l.game_id)` DESC
 
 -- 9) ---------------
-SELECT (COUNT(*) * g.price) AS TOTAL_GAIN,
+SELECT (sum(g.price) )AS TOTAL_GAIN,
        g.name,
        p.name
 FROM game g
-         JOIN library l
-              ON l.game_id = g.id
-         JOIN account a
-              ON a.id = l.account_id
+         LEFT JOIN library l
+                   ON l.game_id = g.id
          JOIN publisher p
               ON p.id = g.publisher_id
-
-WHERE g.id = l.game_id
-GROUP BY g.name
-ORDER BY TOTAL_GAIN DESC
+GROUP BY p.id
+ORDER BY TOTAL_GAIN DESC;
 
 -- 10)----------------------------
 
