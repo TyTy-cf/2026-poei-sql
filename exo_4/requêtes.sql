@@ -127,12 +127,6 @@ ORDER BY sum_game_prices DESC LIMIT 1;
 
 -- 4-20 BRO JE SAIS PAS
 
-SELECT a.name, COUNT(gc.game_id), g.name FROM library as l
-JOIN account AS a ON a.id = l.account_id
-JOIN game AS g ON l.game_id = g.id
-JOIN game_country AS gc ON gc.game_id = g.id
-WHERE a.country_id != gc.country_id
-GROUP BY l.account_id;
 
 -- 4-21
 
