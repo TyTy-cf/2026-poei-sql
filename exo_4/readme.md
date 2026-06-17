@@ -1,4 +1,3 @@
-
 ### 1/ Afficher les jeux (table : games), triés par ordre de date de sortie (publishedAt)
 
 ### 2/ Afficher tous les jeux les plus cher (ceux ayant le prix maximum)

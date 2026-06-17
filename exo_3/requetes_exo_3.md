@@ -38,8 +38,8 @@ ORDER BY publish_at DESC LIMIT 20;
 ```sql
 SELECT brands.label, COUNT(listings.id) AS 'Nombre annonces'
 FROM brands
-         JOIN models ON brands.id = models.brand_id
-         JOIN listings ON models.id = listings.model_id
+         LEFT JOIN models ON brands.id = models.brand_id
+         LEFT JOIN listings ON models.id = listings.model_id
 GROUP BY brands.label;
 ```
 
@@ -80,8 +80,7 @@ FROM listings
 WHERE brands.label = 'Renault'
   AND categories.label = 'Citadine'
   AND listings.mileage < 100000
-  AND listings.price >= 5000
-  AND listings.price <= 9000
+  AND listings.price BETWEEN 5000 AND 9000
 ORDER BY listings.publish_at DESC LIMIT 20;
 ```
 
@@ -94,12 +93,30 @@ FROM sellers
 WHERE listings.publish_at >= DATE_SUB(NOW(), INTERVAL 8 YEAR);
 ```
 
-### 7/ Prix moyen des ventes sur les 12 dernières années
+ou
+
+```sql
+SELECT sellers.email, listings.publish_at
+FROM sellers
+         JOIN listings ON sellers.id = listings.seller_id
+WHERE YEAR (listings.publish_at) >= YEAR (NOW()) - 8;
+```
+
+### 7/ Prix moyen des ventes sur les 8 dernières années
 
 ```sql
 SELECT AVG(price) AS 'Prix moyen'
 FROM listings
-WHERE publish_at >= DATE_SUB(NOW(), INTERVAL 12 YEAR);
+WHERE publish_at >= DATE_SUB(NOW(), INTERVAL 8 YEAR);
+```
+
+### Par an
+
+```sql
+SELECT AVG(price) AS 'Prix moyen',
+YEAR(listings.publish_at) AS 'An'
+FROM listings
+GROUP BY YEAR (listings.publish_at);
 ```
 
 ### 8/ Chiffre affaire par marque de voiture
