@@ -124,7 +124,7 @@ GROUP BY brands.label;
 
 
 SELECT
-    COUNT(*) AS NbAnnonces,
+    COUNT(l.id) AS NbAnnonces,
     CONCAT(UPPER(sellers.last_name), " ", sellers.first_name) AS NomVendeur
 
 FROM listings
