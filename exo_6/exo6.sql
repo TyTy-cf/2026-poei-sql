@@ -74,8 +74,82 @@ GROUP BY gender;
 
 
 8
-Ya pô
+est parti acheter du lait
 
 
 
 9
+Je comprends pas la question...
+
+
+
+10
+SELECT account.id,
+       account.name
+FROM account
+LEFT JOIN playlist ON account.id = playlist.account_id
+WHERE playlist.account_id IS NULL;
+
+
+
+11
+SELECT playlist.name,
+       account.name,
+       playlist.account_id,
+       COUNT(*)
+FROM playlist
+         LEFT JOIN account_like_playlist ON playlist.id = account_like_playlist.playlist_id
+         JOIN account ON playlist.account_id = account.id
+GROUP BY playlist.name;
+
+
+
+12
+SELECT account.id,
+       account.name,
+       COUNT(*) AS nbPlaylists
+FROM account
+
+LEFT JOIN playlist ON account.id = playlist.account_id
+GROUP BY account.id;
+
+
+
+13
+SELECT playlist.id,
+       playlist.name,
+       SUM(song.duration) AS duréePlaylist
+FROM playlist
+JOIN playlist_song ON playlist.id = playlist_song.playlist_id
+JOIN song ON playlist_song.song_id = song.id
+GROUP BY playlist.id, playlist.name;
+
+
+
+14
+SELECT id,
+    name,
+    YEAR(NOW()) - YEAR(birth_date) AS ageUser
+FROM account;
+
+
+
+15
+SELECT COUNT(*)
+FROM account
+WHERE email LIKE "%gmail%";
+
+
+
+16
+SELECT COUNT(*)
+FROM account
+WHERE created_at LIKE "2020%";
+
+
+
+17
+SELECT ROUND(SUM(cost), 2) AS gainToto
+FROM account_subscription
+LEFT JOIN subscription ON account_subscription.subscription_id = subscription.id
+WHERE account_subscription.finished_at IS NOT NULL;
