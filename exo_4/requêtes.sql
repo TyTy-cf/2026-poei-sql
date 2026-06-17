@@ -148,8 +148,16 @@ HAVING COUNT(*) > 1);
 
 -- 4-23
 
-SELECT * FROM comment AS c
+SELECT a.name, g.id, GROUP_CONCAT(DISTINCT (SELECT l.game_id FROM library AS l2 WHERE l2.account_id = a.id GROUP BY l2.account_id)) AS games_owned, c.content FROM comment AS c
 JOIN account AS a ON c.account_id = a.id
 JOIN game AS g ON c.game_id = g.id
-JOIN library AS l ON a.id = l.account_id and g.id = l.game_id
-GROUP BY
+JOIN library AS l ON a.id = l.account_id
+WHERE c.game_id != ALL (SELECT l3.game_id FROM library AS l3 WHERE l3.account_id = a.id) AND c.account_id = a.id
+GROUP BY l.account_id;
+
+-- 4-24
+
+SELECT g.name, SUM(c.down_votes), SUM(c.up_votes), ROUND(AVG(c.rank), 2) AS avg_rank FROM game AS g
+JOIN comment AS c ON g.id = c.game_id
+GROUP BY g.id
+HAVING SUM(c.down_votes) > SUM(c.up_votes) AND AVG(c.rank) > (SELECT AVG(rank) FROM comment);
