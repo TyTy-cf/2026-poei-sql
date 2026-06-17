@@ -222,7 +222,6 @@ WHERE c.game_id NOT IN (
     SELECT 
     game_id
     FROM library
-    
 )
 
 -- 24/ Afficher les jeux dont leur total de downvote supérieur au total d'upvotes, MAIS un rank supérieur à la moyenne globale des rank de tous les commentaires.
