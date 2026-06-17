@@ -198,14 +198,31 @@ ORDER BY acc_percentage DESC
 
 
 -- 22/ Faire une requête pour supprimer les doublons de la table libraries (paire game_id et account_id)
-SELECT 
-    g.id as game_id,
-    a.id as account_id
-FROM account a 
-JOIN game g ON l.game_id = g.id
+DELETE l1
+FROM library l1
+JOIN library l2
+ON l1.game_id = l2.game_id 
+AND l1.account_id = l2.account_id
+WHERE l1.id > l2.id;
 
-
+select * 
+from library l1
+join library l2
+on l1.game_id = l2.game_id
+and l1.account_id = l2.account_id
+where l1.id > l2.id
 
 -- 23/ Faire une requête pour afficher les utilisateurs qui ont mis des commentaires à des jeux non présents dans leur bibliothèque
+SELECT DISTINCT
+    a.nickname AS acc_nickname
+FROM account a
+JOIN comment c ON c.account_id = a.id
+JOIN library l ON l.account_id = a.id
+WHERE c.game_id NOT IN (
+    SELECT 
+    game_id
+    FROM library
+    
+)
 
 -- 24/ Afficher les jeux dont leur total de downvote supérieur au total d'upvotes, MAIS un rank supérieur à la moyenne globale des rank de tous les commentaires.
