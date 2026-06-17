@@ -9,7 +9,7 @@ ORDER BY published_at ASC;
 ### 2/ Afficher tous les jeux les plus cher (ceux ayant le prix maximum)
 
 ```sql
-SELECT *
+SELECT game.name, game.price
 FROM game
 WHERE price = (SELECT MAX(price) FROM game);
 ```
@@ -17,7 +17,7 @@ WHERE price = (SELECT MAX(price) FROM game);
 ### 3/ En reprenant la requête de la question 1, afficher uniquement les jeux ayant au moins le style FPS
 
 ```sql
-SELECT *
+SELECT game.name, game.published_at, genre.name
 FROM game
          JOIN game_genre ON game.id = game_genre.game_id
          JOIN genre ON game_genre.genre_id = genre.id
@@ -47,11 +47,12 @@ GROUP BY a.id;
 ### 6/ Afficher la valeur (somme du prix des jeux) de la bibliothèque (library) d'un compte (account)
 
 ```sql
-SELECT a.name, SUM(g.price) AS library_value
+SELECT a.name, IF(SUM(g.price) IS NULL, 0, SUM(g.price)) AS library_value
 FROM account a
-         JOIN library l ON a.id = l.account_id
-         JOIN game g ON l.game_id = g.id
-GROUP BY a.id;
+         LEFT JOIN library l ON a.id = l.account_id
+         LEFT JOIN game g ON l.game_id = g.id
+GROUP BY a.id
+ORDER BY `library_value` DESC 
 ```
 
 ### 7/ Afficher les nicknames utilisés plusieurs fois
@@ -79,6 +80,15 @@ SELECT g.name, (COUNT(l.id) * g.price) AS total_revenue
 FROM game g
          LEFT JOIN library l ON g.id = l.game_id
 GROUP BY g.id;
+```
+
+```sql
+SELECT p.name,
+       SUM(g.price) AS "CA Editeur"
+FROM game g
+         LEFT JOIN library l ON g.id = l.game_id
+         JOIN publisher p ON p.id = g.publisher_id
+GROUP BY p.id;
 ```
 
 ### 10/ Afficher par genre, son nombre de fois où il a été vendu
@@ -153,7 +163,8 @@ SELECT g.name, ROUND(AVG(c.rank), 2) AS avg_rank
 FROM game g
          JOIN comment c ON g.id = c.game_id
 GROUP BY g.id
-HAVING avg_rank > (SELECT AVG(rank) FROM comment);
+HAVING avg_rank > (SELECT AVG(rank) FROM comment)
+ORDER BY avg_rank DESC;
 ```
 
 ### 18/ Afficher les account n’ayant jamais acheté de jeu
