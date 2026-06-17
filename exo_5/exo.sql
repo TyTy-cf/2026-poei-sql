@@ -32,6 +32,25 @@ CREATE TABLE artist (
     name varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
-    url_banner varchar(255)
+    url_banner varchar(255) NOT NULL,
+    certificate longtext NOT NULL,
+    created_at datetime NOT NULL,
     PRIMARY KEY(id)
-)
+);
+
+CREATE TABLE album (
+    id int(11) UNIQUE NOT NULL AUTO_INCREMENT,
+    artist_id int(11) NOT NULL REFERENCES artist(id),
+    name varchar(255) NOT NULL,
+    released_at datetime NOT NULL,
+    finished_at datetime NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE song (
+    id int(11) UNIQUE NOT NULL AUTO_INCREMENT,
+    name varchar(255) NOT NULL,
+    duration int(11) NOT NULL,
+    is_explicit tinyint(1) NOT NULL,
+    PRIMARY KEY(id)
+);
