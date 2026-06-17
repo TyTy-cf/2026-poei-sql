@@ -155,3 +155,42 @@ GROUP BY g.id
 ORDER BY total_down DESC LIMIT 1;
 
 -- 17) --------------------------------
+-- WHERE filtre les lignes, HAVING filtre les groupes.
+
+SELECT g.name,
+       ROUND(AVG(c.rank), 2) AS note_moyenne
+FROM game AS g
+         JOIN comment AS c
+              ON c.game_id = g.id
+
+GROUP BY g.id
+HAVING AVG(c.rank) > (SELECT AVG(rank)
+                      FROM comment);
+-- 18) ----------------------
+SELECT a.name,
+       l.game_id
+
+FROM account a
+         LEFT JOIN library l
+                   ON l.account_id = a.id
+GROUP BY a.id
+HAVING COUNT(l.game_id) = 0
+
+-- 19) ----------------------------
+
+SELECT COUNT(*) AS nb_sale,
+       genre.name
+FROM game g
+         JOIN library l
+              ON l.game_id = g.id
+         JOIN account a
+              ON a.id = l.account_id
+         JOIN game_genre ga_ge
+              ON g.id = ga_ge.game_id
+         JOIN genre genre
+              ON genre.id = ga_ge.genre_id
+
+GROUP BY genre.name
+ORDER BY COUNT(*) DESC
+    LIMIT 1;
+
