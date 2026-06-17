@@ -111,10 +111,11 @@ LIMIT 3
 
 -- 13/ Afficher les différents jeux par année, sous une même colonne
 SELECT 
-    EXTRACT(YEAR FROM g.published_at) AS year,
-    g.name AS game_name
-FROM game g
-ORDER BY year DESC
+    EXTRACT(YEAR FROM g.published_at) AS year, 
+    GROUP_CONCAT(g.name, ' ') AS game_names 
+FROM game g 
+GROUP BY year 
+ORDER BY year DESC;
 
 
 -- 14/ Le jeu le plus ancien

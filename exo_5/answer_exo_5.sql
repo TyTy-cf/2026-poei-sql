@@ -1,7 +1,6 @@
 
 
 CREATE DATABASE `db_spotifish`;
-USE `db_spotifish`;
 
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE IF NOT EXISTS `account` (
@@ -17,7 +16,6 @@ CREATE TABLE IF NOT EXISTS `account` (
 );
 
 DROP TABLE IF EXISTS `playlist`;
-
 CREATE TABLE IF NOT EXISTS `playlist` (
     `id` int(8) NOT NULL AUTO_INCREMENT,
     `account_id` int(8) NOT NULL,
@@ -98,3 +96,5 @@ CREATE TABLE IF NOT EXISTS `album_song` (
     FOREIGN KEY (`artist_id`) REFERENCES `artist`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`song_id`) REFERENCES `song`(`id`) ON DELETE CASCADE
 );
+
+USE `db_spotifish`;
