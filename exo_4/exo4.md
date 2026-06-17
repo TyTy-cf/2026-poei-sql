@@ -304,5 +304,15 @@ AND g.id IS NOT IN (
 ### 24
 
 ```sql
-
+SELECT
+g.name
+FROM `game` AS g
+JOIN `comment` AS c ON c.game_id = g.id
+WHERE c.down_votes > c.up_votes
+AND c.rank > (
+    SELECT
+    AVG(rank)
+    FROM `comment`
+)
+GROUP BY g.name
 ```
