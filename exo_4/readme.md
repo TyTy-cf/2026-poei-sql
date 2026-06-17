@@ -37,6 +37,10 @@
 
 ### 19/ Afficher le genre le plus acheté
 
+**STOP ICI**
+
+---
+
 ### 20/ Afficher les noms de compte ayant acheté un jeu, qui n’est pas dans leur langue natale.
 
 ### 21/ Afficher le ratio de présence des accounts par pays dans l’application
