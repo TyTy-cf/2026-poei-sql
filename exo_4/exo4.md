@@ -284,9 +284,20 @@ GROUP BY country_id
 
 
 ### 23
+ne fonctionne pas
 
 ```sql
-
+SELECT 
+a.name
+FROM `account` AS a
+WHERE g.id IS IN (
+    SELECT game_id
+    FROM `comment`
+    )
+AND g.id IS NOT IN (
+    SELECT game_id
+    FROM library
+    )
 ```
 
 
