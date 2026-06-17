@@ -28,11 +28,16 @@ ORDER BY game_time DESC;
 
 
 --5) -------------------------
-SELECT *
-FROM game g
+SELECT a.name,
+       CONCAT(
+               SUM(l.installed),
+               '/',
+               COUNT(*)
+       ) AS installed_games
+FROM account a
          JOIN library l
-              ON l.game_id = g.id
-WHERE l.installed = 1;
+              ON l.account_id = a.id
+GROUP BY a.id, a.name;
 
 -- 6)-------------------
 
@@ -191,6 +196,5 @@ FROM game g
               ON genre.id = ga_ge.genre_id
 
 GROUP BY genre.name
-ORDER BY COUNT(*) DESC
-    LIMIT 1;
+ORDER BY COUNT(*) DESC LIMIT 1;
 
