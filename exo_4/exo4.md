@@ -227,21 +227,52 @@ WHERE l.game_id IS NULL
 ### 19
 
 ```sql
+SELECT
+    ge.name,
+    COUNT(ge.name)
 
+FROM `library` AS l
+         JOIN game AS ga ON ga.id = l.game_id
+         JOIN game_genre AS gg ON gg.game_id = ga.id
+         JOIN genre AS ge ON ge.id = gg.genre_id
+
+GROUP BY ge.name
+ORDER BY ge.name
+    LIMIT 1
 ```
 
 
 ### 20
 
 ```sql
+SELECT
+    DISTINCT a.name
 
+FROM `library` AS l
+         JOIN account AS a ON a.id = l.account_id
+         JOIN country AS c ON c.id = a.country_id
+
+WHERE a.country_id NOT IN (
+    SELECT gc.country_id
+    FROM game AS g
+             JOIN game_country AS gc ON gc.game_id = g.id
+)
 ```
 
 
 ### 21
+le total n'est que de 0.9997
 
 ```sql
-
+SELECT
+c.name,
+COUNT(country_id)/(
+    SELECT COUNT(*)
+    FROM account
+    ) AS ratio
+FROM `account` AS a
+JOIN country AS c ON c.id = a.country_id
+GROUP BY country_id
 ```
 
 
