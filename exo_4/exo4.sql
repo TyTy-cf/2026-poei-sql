@@ -121,7 +121,6 @@ SELECT game.id,
        COUNT(*) AS nbVentes
 FROM library
          JOIN game ON library.game_id = game.id
-         JOIN publisher ON game.publisher_id = publisher.id
 GROUP BY game.id
 ORDER BY COUNT(*)
 LIMIT 3;
@@ -134,7 +133,7 @@ FROM library
          JOIN game ON library.game_id = game.id
          JOIN publisher ON game.publisher_id = publisher.id
 GROUP BY game.id
-ORDER BY COUNT(*)
+ORDER BY COUNT(*) DESC
 LIMIT 3;
 
 
@@ -158,7 +157,7 @@ WHERE published_at = (SELECT MIN(published_at)
 SELECT game.name,
     ROUND(AVG(comment.rank), 2)
     FROM game
-JOIN comment ON game.id = comment.game_id
+LEFT JOIN comment ON game.id = comment.game_id
 GROUP BY game.name;
 
 
@@ -168,24 +167,23 @@ SELECT game.name,
 FROM game
     JOIN comment ON game.id = comment.game_id
     GROUP BY game.name
-    ORDER BY comment.down_votes
+    ORDER BY comment.down_votes DESC
     LIMIT 1;
 
 
 SELECT game.name,
-    comment.rank
+    AVG(comment.rank)
 FROM game
 JOIN comment ON game.id = comment.game_id
-WHERE comment.rank > (SELECT AVG(rank)
+HAVING AVG(comment.rank) > (SELECT AVG(rank)
                    FROM comment)
 GROUP BY game.name;
 
 
 SELECT account.name,
-       COUNT(*)
+       account.id
 FROM account
-JOIN library ON account.id = library.account_id
-WHERE library.game_id = NULL
-GROUP BY account.name;
+LEFT JOIN library ON account.id = library.account_id
+WHERE library.game_id IS NULL;
 
 
