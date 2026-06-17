@@ -38,3 +38,43 @@ FROM album_song AS `as`
 JOIN album AS a ON a.id = `as`.album_id
 JOIN song AS s ON s.id = `as`.song_id
 GROUP BY a.name;
+
+-- 5
+
+SELECT 
+    name,
+    DATE_FORMAT(created_at, "%Y") AS year_creation
+FROM artist
+WHERE year_creation = (
+    SELECT MIN(DATE_FORMAT(created_at, "%Y"))
+    FROM artist
+);
+
+-- 6
+
+SELECT
+    ROUND(
+        AVG(DATE_FORMAT(
+            NOW(), "%Y"
+        )- DATE_FORMAT(
+            birth_date, "%Y"
+            )
+        ),
+        2
+    ) AS avg_age_user
+FROM account;
+
+-- 7
+
+SELECT
+    COUNT(newsletter) AS amount_subscribed_to_news
+FROM account
+WHERE newsletter = 1;
+
+-- 8 (WIP)
+
+SELECT
+    CONCAT("« ", gender, " » = ") AS gender, -- use if
+    COUNT(gender) AS amount_gender
+FROM account
+GROUP BY gender;
