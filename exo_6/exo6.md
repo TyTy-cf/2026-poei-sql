@@ -111,21 +111,38 @@ GROUP BY s.name
 ### 10
 
 ```sql
-
+SELECT
+a.name
+FROM `account` AS a
+LEFT JOIN playlist AS p ON p.account_id = a.id
+WHERE p.account_id IS null
 ```
 
 
 ### 11
 
 ```sql
-
+SELECT
+p.name AS "Nom playlist",
+a.name AS "Nom propriétaire",
+COUNT(alp.account_id) AS "Nombre de like"
+FROM `playlist` AS p
+JOIN account AS a ON a.id = p.account_id
+JOIN account_like_playlist AS alp ON alp.account_id = a.id
+GROUP BY p.name
+ORDER BY COUNT(alp.account_id) DESC
 ```
 
 
 ### 12
 
 ```sql
-
+SELECT
+a.name,
+COUNT(p.account_id) AS "Nombre de playlists créées"
+FROM `account` AS a
+LEFT JOIN playlist AS p ON p.account_id = a.id
+GROUP BY a.name
 ```
 
 
