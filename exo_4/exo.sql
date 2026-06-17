@@ -121,10 +121,50 @@ GROUP BY l.game_id
 ORDER BY total_playtime_all DESC
 LIMIT 3;
 
--- 13 (WIP)
+-- 13
 
 SELECT
-    DATE_FORMAT(published_at, "%Y") AS year_of_publication
-    GROUP_CONCAT(name)
+    DATE_FORMAT(published_at, "%Y") AS year_of_publication,
+    GROUP_CONCAT(name) AS game_list
 FROM game
 GROUP BY year_of_publication;
+
+-- 14
+
+SELECT
+    name,
+    published_at
+FROM game
+ORDER BY published_at ASC
+LIMIT 1;
+
+-- 15
+
+SELECT
+    g.name,
+    CONCAT("Note moyenne : ", ROUND(AVG(c.rank), 2)) AS avg_rate
+FROM game AS g
+JOIN comment AS c ON c.game_id = g.id
+GROUP BY g.id
+ORDER BY ROUND(AVG(c.rank), 2) ASC;
+
+-- 16
+
+SELECT
+    g.name,
+    c.down_votes
+FROM game as g
+JOIN comment AS c ON c.game_id = g.id
+GROUP BY g.id
+ORDER BY c.down_votes DESC
+LIMIT 1;
+
+-- 17 (WIP)
+
+SELECT
+    g.name,
+    CONCAT("Note moyenne : ", ROUND(AVG(c.rank), 2), " ; Note globale : ", (SELECT ROUND(AVG(rank), 2) FROM comment) AS global_rate) AS avg_rate
+FROM game as g
+JOIN comment AS c ON c.game_id = g.id
+WHERE ROUND(AVG(c.rank), 2) > global_rate
+GROUP BY g.id;
