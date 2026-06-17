@@ -159,12 +159,39 @@ GROUP BY g.id
 ORDER BY c.down_votes DESC
 LIMIT 1;
 
--- 17 (WIP)
+-- 17
 
 SELECT
     g.name,
-    CONCAT("Note moyenne : ", ROUND(AVG(c.rank), 2), " ; Note globale : ", (SELECT ROUND(AVG(rank), 2) FROM comment) AS global_rate) AS avg_rate
+    CONCAT(
+        "Note moyenne : ", 
+        ROUND(AVG(c.rank), 2), 
+        " ; Note globale : ", 
+        (SELECT ROUND(AVG(rank), 2) FROM comment)) AS avg_rate
 FROM game as g
 JOIN comment AS c ON c.game_id = g.id
-WHERE ROUND(AVG(c.rank), 2) > global_rate
-GROUP BY g.id;
+GROUP BY g.id
+HAVING ROUND(AVG(c.rank), 2) > (SELECT ROUND(AVG(rank), 2) FROM comment)
+ORDER BY ROUND(AVG(c.rank), 2) DESC;
+
+-- 18
+
+SELECT 
+    a.nickname
+FROM account AS a
+LEFT JOIN library AS l ON l.account_id = a.id
+GROUP BY l.account_id, a.id
+HAVING COUNT(l.account_id) = 0;
+
+-- 19
+
+SELECT 
+    gr.name,
+    COUNT(l.game_id)
+FROM genre AS gr
+JOIN game_genre AS gg ON gg.genre_id = gr.id
+JOIN game AS g ON g.id = gg.game_id
+JOIN library AS l ON l.game_id = g.id
+GROUP BY gg.genre_id
+ORDER BY COUNT(l.game_id) DESC
+LIMIT 1;
