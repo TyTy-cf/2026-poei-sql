@@ -149,26 +149,39 @@ GROUP BY a.name
 ### 13
 
 ```sql
-
+SELECT 
+p.name,
+SEC_TO_TIME(SUM(s.duration)) AS "Durée totale playlist"
+FROM `playlist` AS p
+JOIN playlist_song AS ps ON ps.playlist_id = p.id
+JOIN song AS s ON s.id = ps.song_id
+GROUP BY p.name
 ```
 
 
 ### 14
 
 ```sql
-
+SELECT 
+name,
+YEAR(CURRENT_DATE)-YEAR(birth_date) AS "Âge"
+FROM `account`
 ```
 
 
 ### 15
 
 ```sql
-
+SELECT COUNT(*) AS "Nombre d'utilisateurs inscrits via gmail"
+FROM account
+WHERE email LIKE '%gmail%'
 ```
 
 
 ### 16
 
 ```sql
-
+SELECT COUNT(*) AS "Nombre d'utilisateurs inscrits depuis 2020"
+FROM account
+WHERE YEAR(created_at) = 2020
 ```
