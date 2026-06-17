@@ -128,3 +128,30 @@ SELECT
 FROM game AS g
 GROUP BY YEAR (g.published_at)
 ORDER BY published_year;
+
+-- 14)------------------
+SELECT g.name,
+       g.published_at
+
+FROM game g
+ORDER BY g.published_at ASC LIMIT 1;
+-- 15)------------------
+SELECT g.name,
+       ROUND(AVG(c.rank), 2) AS note_moyenne
+FROM game AS g
+         JOIN comment AS c
+              ON c.game_id = g.id
+GROUP BY g.id
+ORDER BY note_moyenne DESC;
+-- 16 ---
+
+SELECT g.name,
+       SUM(c.down_votes) AS total_down
+
+FROM game AS g
+         JOIN comment AS c
+              ON c.game_id = g.id
+GROUP BY g.id
+ORDER BY total_down DESC LIMIT 1;
+
+-- 17) --------------------------------
