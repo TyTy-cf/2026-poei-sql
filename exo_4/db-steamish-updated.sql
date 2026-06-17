@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `cours_steamish`
 --
-CREATE DATABASE `cours_steamish`;
-USE `cours_steamish`;
+CREATE DATABASE `db_steamish`;
+USE `db_steamish`;
 
 -- --------------------------------------------------------
 

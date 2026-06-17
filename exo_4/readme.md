@@ -37,6 +37,10 @@
 
 ### 19/ Afficher le genre le plus acheté
 
+**STOP ICI**
+
+---
+
 ### 20/ Afficher les noms de compte ayant acheté un jeu, qui n’est pas dans leur langue natale.
 
 ### 21/ Afficher le ratio de présence des accounts par pays dans l’application
@@ -45,4 +49,4 @@
 
 ### 23/ Faire une requête pour afficher les utilisateurs qui ont mis des commentaires à des jeux non présents dans leur bibliothèque
 
-### 24/ Afficher les jeux dont leur total de downvote supérieur au total d'upvotes, MAIS un rank supérieur à la moyenne globale des rank de tous les commentaires.
+### 24/ Afficher les jeux dont leur total de downvote supérieur au total d'upvotes, MAIS un rank supérieur à la moyenne globale des rank de tous les commentaires

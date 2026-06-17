@@ -9,7 +9,7 @@ On affichera que les informations suivantes :
 - La date de publication de la vente au format JJ/MM/AAAA - HH:mm:ss
 - Le nom en majuscule et le prénom du vendeur sous le label "Nom vendeur"
 - L'adresse du vendeur
-- 
+
 ### 2/ Même question mais cette fois je ne veux que les 20 dernières ventes
 
 ### 3/ Afficher le nombre d'annonces de vente par marque de voiture
@@ -20,7 +20,7 @@ On affichera que les informations suivantes :
 
 ### 6/ Afficher les emails des vendeurs ayant passé des anonces au cours des 8 dernières années
 
-### 7/ Prix moyen des ventes sur les 12 dernières années
+### 7/ Prix moyen des ventes sur les 8 dernières années
 
 ### 8/ Chiffre affaire par marque de voiture
 
