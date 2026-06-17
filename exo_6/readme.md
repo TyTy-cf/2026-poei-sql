@@ -199,3 +199,5 @@ Bonus : labellisé les acronymes par leur signification : <br>
 ### 15. Comptez le nombre d'utilisateur étant inscrit avec une adresse mail "gmail"
 
 ### 16. Afficher le nombre d'utilisateur inscrit depuis 2020
+
+### 17. Afficher pour les abonnements **terminés** combien ont-ils rapportés à la plateforme (on affiche seulement les gains totaux pour tous les abonnements)
