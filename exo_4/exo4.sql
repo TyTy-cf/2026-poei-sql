@@ -23,11 +23,11 @@ JOIN genre ON game_genre.genre_id = genre.id
 
 WHERE genre.name = "FPS"
 
-ORDER BY published_at;
+ORDER BY published_at DESC;
 
 
 
-SELECT library.game_time,
+SELECT SUM(library.game_time),
        account.name
 FROM    account
 
@@ -152,4 +152,40 @@ SELECT name,
 FROM game
 WHERE published_at = (SELECT MIN(published_at)
                       FROM game);
+
+
+
+SELECT game.name,
+    ROUND(AVG(comment.rank), 2)
+    FROM game
+JOIN comment ON game.id = comment.game_id
+GROUP BY game.name;
+
+
+
+SELECT game.name,
+    COUNT(comment.down_votes)
+FROM game
+    JOIN comment ON game.id = comment.game_id
+    GROUP BY game.name
+    ORDER BY comment.down_votes
+    LIMIT 1;
+
+
+SELECT game.name,
+    comment.rank
+FROM game
+JOIN comment ON game.id = comment.game_id
+WHERE comment.rank > (SELECT AVG(rank)
+                   FROM comment)
+GROUP BY game.name;
+
+
+SELECT account.name,
+       COUNT(*)
+FROM account
+JOIN library ON account.id = library.account_id
+WHERE library.game_id = NULL
+GROUP BY account.name;
+
 
