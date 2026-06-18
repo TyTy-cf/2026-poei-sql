@@ -79,7 +79,16 @@ est parti acheter du lait
 
 
 9
-Je comprends pas la question...
+SELECT subscription.name,
+       COUNT(*)
+FROM subscription
+         LEFT JOIN account_subscription ON subscription.id = account_subscription.subscription_id
+WHERE (YEAR(account_subscription.effective_at) >= 2021
+          AND (YEAR(account_subscription.finished_at) <= 2021 OR
+          account_subscription.finished_at IS NULL))
+GROUP BY subscription.name;
+
+
 
 
 
