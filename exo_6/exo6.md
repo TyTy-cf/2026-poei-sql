@@ -129,8 +129,8 @@ p.name AS "Nom playlist",
 a.name AS "Nom propriétaire",
 COUNT(alp.account_id) AS "Nombre de like"
 FROM `playlist` AS p
-JOIN account AS a ON a.id = p.account_id
-JOIN account_like_playlist AS alp ON alp.account_id = a.id
+LEFT JOIN account_like_playlist AS alp ON alp.playlist_id = p.id
+JOIN account AS a ON a.id = alp.account_id
 GROUP BY p.name
 ORDER BY COUNT(alp.account_id) DESC
 ```
@@ -186,4 +186,15 @@ WHERE email LIKE '%gmail%'
 SELECT COUNT(*) AS "Nombre d'utilisateurs inscrits depuis 2020"
 FROM account
 WHERE YEAR(created_at) >= 2020
+```
+
+
+### 17
+
+```sql
+SELECT
+SUM(cost)*TIMESTAMPDIFF(MONTH, asub.effective_at, asub.finished_at) AS "Gain total abonnements terminés"
+FROM `subscription` AS s
+JOIN account_subscription AS asub ON asub.subscription_id = s.id
+WHERE asub.finished_at < CURRENT_DATE
 ```
