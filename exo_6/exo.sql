@@ -131,5 +131,53 @@ SELECT
     a.name,
     COUNT(p.account_id) AS playlist_amount
 FROM account AS a
-JOIN playlist AS p ON p.account_id = a.id
+LEFT JOIN playlist AS p ON p.account_id = a.id
 GROUP BY a.id;
+
+-- 13
+
+SELECT
+    CONCAT(
+        ROUND((SUM(s.duration) / 3600), 0),
+        "h",
+        ROUND(((SUM(s.duration) % 3600) / 60), 0),
+        "m",
+        ROUND(((SUM(s.duration) % 3600) % 60), 0),
+        "s"
+    ) AS duration_total
+FROM playlist AS p
+JOIN playlist_song AS ps ON ps.playlist_id = p.id
+JOIN song AS s ON s.id = ps.song_id;
+
+-- 14
+
+SELECT
+    name,
+    (
+        DATE_FORMAT(NOW(), "%Y-%m-%d") 
+        - 
+        DATE_FORMAT(birth_date, "%Y-%m-%d")
+    ) AS age
+FROM account;
+
+-- 15
+
+SELECT
+    COUNT(*) AS gmail_users
+FROM account
+WHERE email LIKE "%@gmail.com";
+
+-- 16
+
+SELECT
+    COUNT(*) AS min_6_years_old_accounts
+FROM account
+WHERE created_at > (NOW() - INTERVAL 6 YEAR);
+
+-- 17
+
+SELECT
+    CONCAT(ROUND(SUM(s.cost), 2), "€") AS spotifish_earnings
+FROM subscription AS s
+JOIN account_subscription AS `as` ON `as`.subscription_id = s.id
+WHERE `as`.finished_at IS NOT NULL;
