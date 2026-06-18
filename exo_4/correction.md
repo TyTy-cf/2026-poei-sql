@@ -155,61 +155,171 @@ GROUP BY p.id;
 ### 10/ Afficher par genre, son nombre de fois où il a été vendu
 
 ```sql
+SELECT 	ge.name,
+        COUNT(l.id) AS "Nb fois vendu"
 
+FROM genre ge
+
+ LEFT JOIN game_genre gg ON gg.genre_id = ge.id
+ LEFT JOIN game g ON g.id = gg.game_id
+ LEFT JOIN library l ON l.game_id = g.id
+
+GROUP BY ge.id;
 ```
 
 ### 11/ Afficher le top 3 des jeux les plus vendu
 
 ```sql
+SELECT 	g.name,
+          COUNT(l.id) AS "Nb fois vendu"
 
+FROM game g 
+
+LEFT JOIN library l ON l.game_id = g.id
+
+GROUP BY g.id
+
+ORDER BY COUNT(l.id) DESC
+
+LIMIT 3;
 ```
 
 ### 12/ Afficher le top 3 des jeux les plus joués (temps de jeu cumulé parmi toutes les library les plus élevé)
 
 ```sql
+SELECT 	g.name,
+        SUM(l.game_time) AS played
 
+FROM game g 
+
+LEFT JOIN library l ON l.game_id = g.id
+
+GROUP BY g.id
+
+ORDER BY played DESC
+
+LIMIT 3;
 ```
 
 ### 13/ Afficher les différents jeux par année, sous une même colonne
 
 ```sql
+SELECT
+	YEAR(g.published_at) AS year,
+    GROUP_CONCAT(g.name, ' ') AS games
 
+FROM game g
+
+GROUP BY year
+
+ORDER BY year DESC;
 ```
 
 ### 14/ Le jeu le plus ancien
 
 ```sql
-
+SELECT *
+FROM `game`
+ORDER BY published_at ASC
+LIMIT 1;
 ```
 
 ### 15/ Afficher les jeux avec leur note moyenne (table comment, colonne rank)
 
 ```sql
+SELECT
+	g.name,
+    ROUND(AVG(c.rank), 2) AS avg_rank
 
+FROM `game` g
+
+LEFT JOIN comment c ON c.game_id = g.id
+
+GROUP BY g.id 
+ORDER BY `avg_rank` DESC 
 ```
 
 ### 16/ Afficher le jeu ayant le plus de commentaire négatif (colonne down_votes)
 
 ```sql
+SELECT
+	g.name,
+    SUM(c.down_votes) AS sum_downvote
 
+FROM `game` g
+
+LEFT JOIN comment c ON c.game_id = g.id
+
+GROUP BY g.id
+
+ORDER BY sum_downvote DESC
+LIMIT 1;
 ```
 
 ### 17/ Afficher les jeux dont la moyenne des commentaires (rank) est supérieur à la moyenne globale
 
 ```sql
+SELECT
+	g.name,
+    ROUND(AVG(c.rank), 2) AS avg_rank
 
+FROM `game` g
+
+LEFT JOIN comment c ON c.game_id = g.id
+
+GROUP BY g.id
+
+HAVING avg_rank > (
+    SELECT AVG(rank)
+    FROM comment
+)
+
+ORDER BY `avg_rank` DESC 
 ```
 
 ### 18/ Afficher les account n’ayant jamais acheté de jeu
 
 ```sql
+SELECT account.name,
+       account.id
 
+FROM account
+
+LEFT JOIN library ON account.id = library.account_id
+
+WHERE library.account_id IS NULL;
+```
+
+- Alternative :
+
+```sql
+SELECT account.name,
+       account.id
+
+FROM account
+
+WHERE account.id NOT IN (
+    SELECT DISTINCT l.account_id
+    FROM library l
+);
 ```
 
 ### 19/ Afficher le genre le plus acheté
 
 ```sql
+SELECT 	ge.name,
+        COUNT(l.id) AS nb_times_sold
 
+FROM genre ge
+
+ LEFT JOIN game_genre gg ON gg.genre_id = ge.id
+ LEFT JOIN library l ON l.game_id = gg.game_id
+
+GROUP BY ge.id
+
+ORDER BY nb_times_sold DESC
+
+LIMIT 1;
 ```
 
 **STOP ICI**
