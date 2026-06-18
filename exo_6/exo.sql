@@ -71,10 +71,65 @@ SELECT
 FROM account
 WHERE newsletter = 1;
 
--- 8 (WIP)
+-- 8
 
 SELECT
-    CONCAT("« ", gender, " » = ") AS gender, -- use if
+    IF (
+        gender = "F",
+        "« F » = Femme",
+        IF (
+            gender = "H",
+            "« H » = Homme",
+            IF (
+                gender = "NB",
+                "« NB » = Non-binaire" ,
+                "« NR » = Non-renseigné"
+            )
+        )
+    ),
     COUNT(gender) AS amount_gender
 FROM account
 GROUP BY gender;
+
+-- 9
+
+SELECT
+    s.name,
+    COUNT(`as`.subscription_id) AS subscribed_year_2021
+FROM subscription AS s
+JOIN account_subscription AS `as` ON `as`.subscription_id = s.id
+WHERE `as`.effective_at LIKE "2021%" OR `as`.finished_at LIKE "2021%"
+GROUP BY s.id;
+
+-- 10
+
+SELECT
+    name
+FROM account
+WHERE id NOT IN (
+    SELECT a.id
+    FROM account AS a
+    JOIN playlist AS p ON p.account_id = a.id
+    GROUP BY a.id
+    HAVING COUNT(a.id) > 0
+);
+
+-- 11
+
+SELECT
+    p.name AS "Nom playlist",
+    a.name AS "Nom propriétaire",
+    COUNT(alp.playlist_id) AS "Nombre de like"
+FROM playlist AS p
+JOIN account AS a ON a.id = p.account_id
+JOIN account_like_playlist AS alp ON alp.playlist_id = p.id
+GROUP BY p.id;
+
+-- 12
+
+SELECT
+    a.name,
+    COUNT(p.account_id) AS playlist_amount
+FROM account AS a
+JOIN playlist AS p ON p.account_id = a.id
+GROUP BY a.id;
