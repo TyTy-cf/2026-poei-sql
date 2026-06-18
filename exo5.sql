@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS song
 
 DROP TABLE IF EXISTS playlist_song;
 CREATE TABLE IF NOT EXISTS playlist_song (
-                                             id INT(8) NOT NULL AUTO_INCREMENT,
+    id INT(8) NOT NULL AUTO_INCREMENT,
     playlist_id INT(8) NOT NULL,
     song_id INT(8) NOT NULL,
     position INT(10) NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS playlist_song (
 
 DROP TABLE IF EXISTS artist;
 CREATE TABLE IF NOT EXISTS artist (
-                                      id INT(8) NOT NULL AUTO_INCREMENT,
+    id INT(8) NOT NULL AUTO_INCREMENT,
     name VARCHAR(80) NOT NULL,
     email VARCHAR(120) NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS artist (
 
 DROP TABLE IF EXISTS album;
 CREATE TABLE IF NOT EXISTS album (
-                                     id INT(8) NOT NULL AUTO_INCREMENT,
+    id INT(8) NOT NULL AUTO_INCREMENT,
     artist_id INT(8) NOT NULL,
     name VARCHAR(255) NOT NULL,
     published_at DATE NOT NULL,
@@ -96,8 +96,9 @@ CREATE TABLE IF NOT EXISTS album (
 
 DROP TABLE IF EXISTS album_song;
 CREATE TABLE IF NOT EXISTS album_song (
-                                          album_id INT(8) NOT NULL,
+    album_id INT(8) NOT NULL,
     song_id  INT(8) NOT NULL,
+    PRIMARY KEY (album_id, song_id),
     FOREIGN KEY (album_id) REFERENCES album(id),
     FOREIGN KEY (song_id) REFERENCES song(id)
     )
