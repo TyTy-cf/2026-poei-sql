@@ -62,11 +62,36 @@ LEFT JOIN ability a ON ha.ability_id = a.id
 
 
 -- 6/ Afficher les hero n'ayant jamais participé à une game.
+/*
+SELECT 
+    h.name AS hero_name
+FROM hero h
+WHERE h.id NOT IN (
+    SELECT hero_id
+    FROM participe
+)
+*/
+SELECT 
+    h.name AS hero_name
+FROM hero h
+LEFT JOIN participe p ON h.id = p.hero_id
+WHERE p.hero_id IS NULL
 
 -- 7/ Afficher les ability ayant un dégât min différent du dégât max
+SELECT * FROM ability WHERE damage_min != damage_max
 
 -- 8/ Afficher le récapitulatif d'une game :
   --Nom partie | Nom Team | Nom hero | Stats hero (kill/death/assistance) | 'V' si son équipe a gagné ou 'P' sinon
+SELECT 
+    g.name AS "Nom partie",
+    t.name AS "Nom Team",
+    h.name AS "Nom hero",
+    CONCAT("(", p.nb_kill, "/", p.nb_death, "/", p.nb_assistance, ")") AS "Stats hero",
+    IF (p.team_id = g.team_victory_id, 'V', 'P') AS "Résultat"
+FROM game g
+JOIN participe p ON g.id = p.game_id
+JOIN team t ON p.team_id = t.id 
+JOIN hero h ON p.hero_id = h.id
 
 -- 9/ Afficher le nombre de victoire par team
 

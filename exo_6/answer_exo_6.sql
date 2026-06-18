@@ -50,9 +50,9 @@ ORDER BY SEC_TO_TIME(SUM(s.duration)) DESC
 -- Par exemple, s’il y a 2 artistes en 1976 et que c’est l’année la plus basse, je veux voir les deux (on ignore le jours et le mois)
 SELECT 
     a.name,
-    MIN(EXTRACT(YEAR FROM a.created_at)) as year
+    EXTRACT(YEAR FROM a.created_at) as year
 FROM artist a
-WHERE EXTRACT(YEAR FROM a.created_at) = (select MIN(EXTRACT(YEAR FROM a.created_at)) FROM artist)
+WHERE YEAR(a.created_at) = (select MIN(YEAR(created_at)) FROM artist)
 
 -- 6. Afficher l’âge moyen des utilisateurs de l’application. Formule de calcul : année actuelle – année de « birth_date » de l’utilisateur
 SELECT 
