@@ -280,8 +280,34 @@ GROUP BY country_id
 
 ### 22
 
-```sql
+Chercher les doublons
 
+```sql
+SELECT   
+COUNT(*) AS doublon, 
+game_id, 
+account_id
+FROM library
+GROUP BY 
+game_id, 
+account_id
+HAVING COUNT(*) > 1
+```
+
+Supprimer les doublons
+
+```sql
+DELETE FROM library
+LEFT OUTER JOIN (
+	SELECT MIN(id) AS id,
+    game_id,
+    account_id
+    FROM library
+    GROUP BY game_id,
+    account_id
+    ) AS doublon
+    ON library.id = doublon.id
+WHERE doublon.id IS NULL
 ```
 
 

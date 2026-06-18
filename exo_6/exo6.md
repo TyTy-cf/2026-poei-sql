@@ -99,11 +99,12 @@ Il existe pas :c
 
 ```sql
 SELECT
-s.name,
-COUNT(asu.subscription_id) AS "Nombre d'abonnés"
+    s.name,
+    COUNT(asu.subscription_id) AS "Nombre d'abonnés"
 FROM `subscription` AS s
-JOIN account_subscription AS asu ON asu.subscription_id = s.id
-WHERE YEAR(asu.effective_at) = 2021
+         JOIN account_subscription AS asu ON asu.subscription_id = s.id
+WHERE YEAR(asu.effective_at) <= 2021
+  AND YEAR(asu.finished_at) >= 2021
 GROUP BY s.name
 ```
 
