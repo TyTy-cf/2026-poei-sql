@@ -82,6 +82,7 @@ SELECT
 FROM account_subscription as asub
 JOIN subscription s ON asub.subscription_id = s.id
 WHERE YEAR(asub.effective_at) = 2021
+OR YEAR(asub.finished_at) > 2021 AND YEAR(asub.effective_at) < 2021
 GROUP BY s.name
 
 
@@ -96,14 +97,46 @@ WHERE p.id IS NULL
 -- 11. Afficher le nombre de like par playlist, avec le nom du propriétaire de la playlist, on doit voir :
     -- « Nom playlist | Nom propriétaire | Nombre de like »
     -- Il faut passer par la table « account_like_playlist »
-
+SELECT 
+    p.name AS " Nom playlist",
+    a.name AS " Nom propriétaire",
+    count(alp.account_id) AS " Nombre de like"
+FROM playlist p
+JOIN account a ON p.account_id = a.id
+LEFT JOIN account_like_playlist alp ON p.id = alp.playlist_id
+GROUP BY p.id, a.name
 
 -- 12. Afficher le nombre de playlist par compte
+SELECT
+    a.name AS "Nom du compte",
+    COUNT(p.id) AS "Nombre de playlist"
+FROM playlist p
+JOIN account a ON p.account_id = a.id
+GROUP BY a.id, a.name
 
 -- 13. Afficher la durée total des playlists publiques
+SELECT 
+    p.name AS " Nom playlist",
+    SUM(s.duration) AS "Durée totale" 
+FROM playlist p
+JOIN playlist_song ps ON p.id = ps.playlist_id
+JOIN song s ON ps.song_id = s.id
+group BY p.id, p.name
 
 -- 14. Afficher l'âge de chaque utilisateur
+SELECT 
+    a.name AS "Nom utilisateur",
+    EXTRACT(YEAR FROM CURDATE()) - EXTRACT(YEAR FROM a.birth_date) AS "Âge"
+FROM account a
 
 -- 15. Comptez le nombre d'utilisateur étant inscrit avec une adresse mail "gmail"
+SELECT 
+    COUNT(*) AS "Nombre d'utilisateurs avec un mail gmail"
+FROM account a   
+WHERE a.email LIKE '%@gmail.com'
 
 -- 16. Afficher le nombre d'utilisateur inscrit depuis 2020
+SELECT 
+    COUNT(*) AS "Nombre d'utilisateurs inscrits depuis 2020"
+FROM account a
+WHERE a.created_at >= '2020-01-01'
