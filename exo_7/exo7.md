@@ -88,48 +88,113 @@ WHERE damage_min != damage_max
 ### 8
 
 ```sql
-
+SELECT
+g.name "Nom partie",
+t.name "Nom Team",
+h.name "Nom hero",
+CONCAT(p.nb_kill,' / ',p.nb_death,' / ',p.nb_assistance) KDA,
+IF (team_victory_id = t.id,"V","P") Résulat
+FROM `game` g
+JOIN participe p ON p.game_id = g.id
+JOIN team t ON t.id = p.team_id
+JOIN hero h ON h.id = p.hero_id
+ORDER BY g.name, t.name
 ```
 
 
 ### 9
 
 ```sql
-
+SELECT
+t.name,
+COUNT(team_victory_id) "Total de victoires"
+FROM `game` g
+JOIN team t ON t.id = g.team_victory_id
+GROUP BY t.name
 ```
 
 
 ### 10
 
 ```sql
-
+SELECT
+g.id,
+g.name,
+h.name,
+p.nb_death
+FROM `game` g
+JOIN participe p ON p.game_id = g.id
+JOIN hero h ON h.id = p.hero_id
+WHERE p.nb_death = (
+    SELECT
+    MAX(nb_death)
+    FROM participe
+)
+GROUP BY g.id
 ```
 
 
 ### 11
 
 ```sql
-
+SELECT
+g.id,
+g.name,
+h.name,
+p.nb_kill
+FROM `game` g
+JOIN participe p ON p.game_id = g.id
+JOIN hero h ON h.id = p.hero_id
+WHERE p.nb_kill = (
+    SELECT
+    MAX(nb_kill)
+    FROM participe
+)
+GROUP BY g.id
 ```
 
 
 ### 12
 
 ```sql
-
-
+SELECT
+h.name,
+MAX(hero_id) "Nombre de game"
+FROM `participe` p
+JOIN hero h ON h.id = p.hero_id
+WHERE (
+    SELECT
+    MAX(hero_id)
+    FROM participe
+) = hero_id
 ```
+
+
 ### 13
 
 ```sql
-
+SELECT
+h.name,
+COUNT(p.nb_kill) "Nombre de kill total"
+FROM `participe` p
+JOIN hero h ON h.id = p.hero_id
+GROUP BY h.name
+ORDER BY COUNT(p.nb_kill) DESC
+LIMIT 1
 ```
 
 
 ### 14
 
 ```sql
-
+SELECT
+h.name,
+COUNT(p.nb_death) "Nombre de mort total"
+FROM `participe` p
+JOIN hero h ON h.id = p.hero_id
+GROUP BY h.name
+ORDER BY COUNT(p.nb_death) DESC
+LIMIT 1
 ```
 
 
