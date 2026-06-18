@@ -133,11 +133,11 @@ FROM account a
 -- 15. Comptez le nombre d'utilisateur étant inscrit avec une adresse mail "gmail"
 SELECT 
     COUNT(*) AS "Nombre d'utilisateurs avec un mail gmail"
-FROM account a   
-WHERE a.email LIKE '%@gmail.com'
+FROM account
+WHERE email LIKE '%@gmail.com'
 
 -- 16. Afficher le nombre d'utilisateur inscrit depuis 2020
 SELECT 
     COUNT(*) AS "Nombre d'utilisateurs inscrits depuis 2020"
-FROM account a
-WHERE a.created_at >= '2020-01-01'
+FROM account
+WHERE created_at >= '2020-01-01'
