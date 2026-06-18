@@ -1,5 +1,5 @@
 -- 1/ Afficher le contenu de la table Hero
-
+SELECT * FROM hero
 -- 2/ Ajouter un nouvel Héro avec ces informations :
     -- name = Vengeful Spirit
     -- hp_max = 1720
@@ -9,6 +9,8 @@
     -- attack_max = 140
     -- defense = 19
      -- ability_resistance = 25
+INSERT INTO hero (name, hp_max, mana_max, level, attack_min, attack_max, defense, ability_resistance)
+VALUES ('Vengeful Spirit', 1720, 711, 25, 132, 140, 19, 25)
 
 -- 3/ Créer deux nouvelles Ability avec ces informations :
     -- name = Magic Missile
@@ -22,16 +24,42 @@
     -- damage_min = 120
     -- damage_max = 120
     -- is_ulti = 0
+INSERT INTO ability (name, mana_cost, damage_min, damage_max, is_ulti)
+VALUES ('Magic Missile', 130, 360, 360, 0),
+       ('Wave of Terror', 40, 120, 120, 0)
 
----- 4/ Ajouter la relation hero_ability :
--- Vengeful Spirit a Magic Missile
--- Vengeful Spirit a Wave of Terror
+-- 4/ Ajouter la relation hero_ability :
+    -- Pour cela vous utiliserez un "insert select", en sachant que les deux noms sont uniques
+        -- Vengeful Spirit a Magic Missile
+        -- Vengeful Spirit a Wave of Terror
+INSERT INTO hero_ability (hero_id, ability_id)
+SELECT h.id, a.id
+FROM hero h
+JOIN ability a ON h.name = 'Vengeful Spirit' AND a.name IN ('Magic Missile', 'Wave of Terror')
 
--- Pour cela vous utiliserez un "insert select", en sachant que les deux noms sont uniques
 
 -- 5/ Afficher le détail d'un hero avec son/ses ability liées, par exemple :
   --Nom hero | ses stats | Nom ability | ability stats
   --(Une première fois sur plusieurs lignes si nécessaire et en une seule ligne par hero, sur une seule ligne vous n’afficherez pas les stats de l’ability)
+SELECT
+    h.name as "Nom hero",
+    CONCAT(
+    h.hp_max, ' | ', 
+    h.mana_max, ' | ', 
+    h.level, ' | ', 
+    h.attack_min, ' | ', 
+    h.attack_max, ' | ', 
+    h.defense, ' | ', 
+    h.ability_resistance, ' | ', 
+    (SELECT 
+    GROUP_CONCAT(CONCAT(a.name) SEPARATOR ' | ') 
+    FROM hero_ability ha2 
+    JOIN ability a ON ha2.ability_id = a.id 
+    WHERE ha2.hero_id = h.id)) AS hero_stats
+FROM hero h
+LEFT JOIN hero_ability ha ON h.id = ha.hero_id
+LEFT JOIN ability a ON ha.ability_id = a.id
+
 
 -- 6/ Afficher les hero n'ayant jamais participé à une game.
 

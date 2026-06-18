@@ -81,8 +81,8 @@ SELECT
     COUNT(*) AS subscription_count
 FROM account_subscription as asub
 JOIN subscription s ON asub.subscription_id = s.id
-WHERE YEAR(asub.effective_at) = 2021
-OR YEAR(asub.finished_at) > 2021 AND YEAR(asub.effective_at) < 2021
+WHERE YEAR(asub.effective_at) <= 2021
+AND YEAR(asub.finished_at) >= 2021
 GROUP BY s.name
 
 
@@ -105,6 +105,7 @@ FROM playlist p
 JOIN account a ON p.account_id = a.id
 LEFT JOIN account_like_playlist alp ON p.id = alp.playlist_id
 GROUP BY p.id, a.name
+ORDER BY count(alp.account_id) DESC
 
 -- 12. Afficher le nombre de playlist par compte
 SELECT
