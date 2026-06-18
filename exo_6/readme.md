@@ -175,14 +175,19 @@ Table de jointure représentant la relation N:N entre les comptes utilisateurs e
 ### 6. Afficher l’âge moyen des utilisateurs de l’application. Formule de calcul : année actuelle – année de « birth_date » de l’utilisateur
 
 ### 7. Afficher le nombre d’abonnés à la newsletter (colonne newsletter = 1 de la table account)
-Afficher le nombre d’utilisateur par genre <br>
+
+### 8. Afficher le nombre d’utilisateur par genre
 Bonus : labellisé les acronymes par leur signification : <br>
     - « F » = Femme <br>
     - « H » = Homme <br>
     - « NB » = Non-binaire <br>
     - « NR » = Non-renseigné
 
-### 9. Afficher par abonnement (table « subscription »), le nombre de fois où un abonnement est présent sur l’année 2021
+### 9. Afficher par abonnement (table « subscription »), le nombre de fois où un abonnement a été actif sur l’année 2021
+- Un abonnement débutant en 2017 et étant toujours actif, a donc été actif en 2021
+- Un abonnement débutant en 2018 et s'étant arrêté en 2022, a donc été actif en 2021
+- Un abonnement débutant en 2018 et s'étant arrêté en 2021, a donc été actif en 2021
+- Un abonnement débutant en 2018 et s'étant arrêté en 2020, n'a donc pas été actif en 2021
 
 ### 10. Afficher les utilisateurs n’ayant jamais créer de playlists
 
@@ -198,6 +203,6 @@ Bonus : labellisé les acronymes par leur signification : <br>
 
 ### 15. Comptez le nombre d'utilisateur étant inscrit avec une adresse mail "gmail"
 
-### 16. Afficher le nombre d'utilisateur inscrit depuis 2020
+### 16. Afficher le nombre d'utilisateur inscrit depuis 2020 et plus
 
 ### 17. Afficher pour les abonnements **terminés** combien ont-ils rapportés à la plateforme (on affiche seulement les gains totaux pour tous les abonnements)
