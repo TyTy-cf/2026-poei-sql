@@ -150,11 +150,15 @@ Table de jointure représentant la relation N:N entre les playlists et les chans
 
 Table de jointure représentant la relation N:N entre les comptes utilisateurs et les playlists qu'ils ont aimées.
 
-| Colonne | Type | Contraintes | Description |
-|---|---|---|---|
-| `account_id` | `int(11)` | PK (composite), FK → `account.id` | Référence au compte utilisateur |
-| `playlist_id` | `int(11)` | PK (composite), FK → `playlist.id` | Référence à la playlist aimée |
+| Colonne | Type | Contraintes | Description                                            |
+|---|---|---|--------------------------------------------------------|
+| `account_id` | `int(11)` | PK (composite), FK → `account.id` | Référence au compte utilisateur qui a aimé la playlist |
+| `playlist_id` | `int(11)` | PK (composite), FK → `playlist.id` | Référence à la playlist aimée                          |
 
+
+### Concepteur
+
+![img.png](img.png)
 
 ## 2. Requêtes
 
@@ -195,14 +199,12 @@ Bonus : labellisé les acronymes par leur signification : <br>
     « Nom playlist | Nom propriétaire | Nombre de like »
     Il faut passer par la table « account_like_playlist »
 
-### 12. Afficher le nombre de playlist par compte
+### 12. Afficher la durée total des playlists publiques
 
-### 13. Afficher la durée total des playlists publiques
+### 13. Afficher l'âge de chaque utilisateur
 
-### 14. Afficher l'âge de chaque utilisateur
+### 14. Comptez le nombre d'utilisateur étant inscrit avec une adresse mail "gmail"
 
-### 15. Comptez le nombre d'utilisateur étant inscrit avec une adresse mail "gmail"
+### 15. Afficher le nombre d'utilisateur inscrit depuis 2020 et plus
 
-### 16. Afficher le nombre d'utilisateur inscrit depuis 2020 et plus
-
-### 17. Afficher pour les abonnements **terminés** combien ont-ils rapportés à la plateforme (on affiche seulement les gains totaux pour tous les abonnements)
+### 16. Afficher pour les abonnements **terminés** combien ont-ils rapportés à la plateforme (on affiche seulement les gains totaux pour tous les abonnements)
