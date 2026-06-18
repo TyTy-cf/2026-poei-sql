@@ -98,7 +98,14 @@ SELECT
     COUNT(`as`.subscription_id) AS subscribed_year_2021
 FROM subscription AS s
 JOIN account_subscription AS `as` ON `as`.subscription_id = s.id
-WHERE `as`.effective_at LIKE "2021%" OR `as`.finished_at LIKE "2021%"
+WHERE 
+    `as`.effective_at LIKE "201%" OR `as`.effective_at LIKE "2020%" OR `as`.effective_at LIKE "2021%"
+    AND
+    (
+        (`as`.finished_at LIKE "201%" OR `as`.finished_at LIKE "2020%" OR `as`.finished_at LIKE "2021%") 
+        OR 
+        (`as`.finished_at IS NULL)
+    )
 GROUP BY s.id;
 
 -- 10
