@@ -28,12 +28,13 @@ ORDER BY ar.name, al.published_at DESC
 ### 3
 
 ```sql
-SELECT 
-a.name,
-COUNT(p.account_id) AS "Nombre de playlists"
+SELECT
+    a.id,
+    a.name,
+    COUNT(p.account_id) AS "Nombre de playlists"
 FROM `playlist` AS p
-JOIN account AS a ON a.id = p.account_id
-GROUP BY a.name
+         JOIN account AS a ON a.id = p.account_id
+GROUP BY a.id
 ```
 
 
@@ -184,5 +185,5 @@ WHERE email LIKE '%gmail%'
 ```sql
 SELECT COUNT(*) AS "Nombre d'utilisateurs inscrits depuis 2020"
 FROM account
-WHERE YEAR(created_at) = 2020
+WHERE YEAR(created_at) >= 2020
 ```
